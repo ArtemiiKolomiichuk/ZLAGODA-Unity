@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SQLite4Unity3d;
-using System.Data;
 
 public class test : MonoBehaviour
 {
@@ -12,17 +11,18 @@ public class test : MonoBehaviour
         string connectionString = Application.streamingAssetsPath + "/test.db";
         SQLiteConnection connection = new SQLiteConnection(connectionString);
 
-        string insert = "INSERT INTO testnomer1(id, name) VALUES(17, 'max');";
+        string insert = "INSERT INTO testnomer1(id, name) VALUES(14, 'n');";
         SQLiteCommand commandIn = new SQLiteCommand(connection);
         commandIn.CommandText = insert;
         commandIn.ExecuteNonQuery();
 
-        string sqlQuery = "SELECT * FROM testnomer1";
-        List<Test> tests = connection.Query<Test>(sqlQuery);
+        string sqlQuery = "SELECT id, name FROM testnomer1";
+        List<Test> rows = connection.Query<Test>(sqlQuery);
 
-        foreach (Test test in tests)
+        foreach (var row in rows)
         {
-            Debug.Log("ID: " + test.id + ", Name: " + test.name);
+            Debug.Log(row);
+            Debug.Log("ID: " + row.id + ", Name: " + row.name);
         }
     }
 

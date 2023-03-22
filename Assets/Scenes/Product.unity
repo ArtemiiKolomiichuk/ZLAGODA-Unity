@@ -3601,12 +3601,12 @@ MonoBehaviour:
   ColumnWidths:
   - 240
   - 290
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - 425
+  - 345
+  - 370
+  - 275
+  - 340
+  - 340
   UseGlobalCellPadding: 1
   CellPadding:
     m_Left: 0

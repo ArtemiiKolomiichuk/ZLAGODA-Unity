@@ -43,7 +43,7 @@ public class SceneController : MonoBehaviour
                 {
                     categoriesData.Add(category.ToList());
                 }
-                TableFiller.Instance.FillTable(categoriesData, Category.dimensions);
+                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions);
                 break;
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
@@ -52,7 +52,7 @@ public class SceneController : MonoBehaviour
                 {
                     productsData.Add(product.ToList());
                 }
-                TableFiller.Instance.FillTable(productsData, Product.dimensions);
+                TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions);
                 break;
         }
     }
@@ -77,7 +77,7 @@ public class SceneController : MonoBehaviour
                 {
                     categoriesData.Add(category.ToList());
                 }
-                TableFiller.Instance.FillTable(categoriesData, Category.dimensions);
+                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions);
                 break;
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
@@ -86,7 +86,7 @@ public class SceneController : MonoBehaviour
                 {
                     productsData.Add(product.ToList());
                 }
-                TableFiller.Instance.FillTable(productsData, Product.dimensions);
+                TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions);
                 break;
         }
     }

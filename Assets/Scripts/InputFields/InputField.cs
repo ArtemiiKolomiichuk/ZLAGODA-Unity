@@ -19,6 +19,7 @@ public abstract class InputField : MonoBehaviour
     {
         inputField.onSelect.AddListener(OnSelect);
         inputField.onDeselect.AddListener(OnDeselect);
+        oldText = inputField.text;
     }
 
     private void OnSelect(string newText)

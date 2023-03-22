@@ -11,6 +11,13 @@ namespace Entities
         ReadOnly 
     }
 
+    public enum CellType
+    {
+        InputField = 0,
+        FKButton,
+        Toggle
+    }
+
     public abstract class Entity
     {
         public static readonly int dimensions;
@@ -20,15 +27,19 @@ namespace Entities
             return null;
         }
         public abstract List<ColumnType> ColumnTypes();
+        public static List<CellType> CellTypes()
+        {
+            return null;
+        }
     }
 
     public class Product : Entity
     {
-        public static new readonly int dimensions = 5;
+        public static new readonly int dimensions = 8;
         public int id_product { get; set; }
         public string product_name { get; set; }
+        public string charachteristics { get; set; }
         public string manufacturer { get; set; }
-        public string characteristics { get; set; }
         public int category_number { get; set; }
         
         public int discounted { get; set; }
@@ -37,12 +48,12 @@ namespace Entities
 
         public override string ToString()
         {
-            return $"Product: \n\aid_product: {id_product}, \n\aproduct_name: {product_name}, \n\amanufacturer: {manufacturer}, \n\acharacteristics: {characteristics}, \n\acategory_number: {category_number}, \n\adiscounted: {discounted}, \n\abase_price: {base_price}, \n\areal_price: {real_price}";
+            return $"Product: \n\aid_product: {id_product}, \n\aproduct_name: {product_name}, \n\amanufacturer: {manufacturer}, \n\acharacteristics: {charachteristics}, \n\acategory_number: {category_number}, \n\adiscounted: {discounted}, \n\abase_price: {base_price}, \n\areal_price: {real_price}";
         }
 
         public override List<string> ToList()
         {
-            return new List<string> { id_product.ToString(), product_name, manufacturer, characteristics, category_number.ToString(), discounted.ToString(), base_price.ToString(), real_price.ToString() };
+            return new List<string> { id_product.ToString(), product_name, charachteristics, manufacturer, category_number.ToString(), discounted.ToString(), base_price.ToString(), real_price.ToString() };
         }
 
         public static new string OrderQuery(string attr, bool desc = false)
@@ -58,6 +69,10 @@ namespace Entities
         public override List<ColumnType> ColumnTypes()
         {
             return new List<ColumnType> { ColumnType.Editable, ColumnType.Editable, ColumnType.Editable, ColumnType.Editable, ColumnType.FK, ColumnType.Editable, ColumnType.Editable, ColumnType.ReadOnly };
+        }
+        public static new List<CellType> CellTypes()
+        {
+            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.FKButton, CellType.Toggle, CellType.InputField, CellType.InputField };
         }
     }
 
@@ -89,6 +104,11 @@ namespace Entities
         public override List<ColumnType> ColumnTypes()
         {
             return new List<ColumnType> { ColumnType.Editable, ColumnType.Editable };
+        }
+
+        public static new List<CellType> CellTypes()
+        {
+            return new List<CellType> { CellType.InputField, CellType.InputField };
         }
     }
 

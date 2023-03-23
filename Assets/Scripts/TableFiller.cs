@@ -25,10 +25,15 @@ public class TableFiller : MonoBehaviour
     public GameObject table;
     public RectTransform layout;
 
+    private static Color white = new Color(1, 1, 1, 1);
+    private static Color lightGray = new Color(0.9f, 0.9f, 0.9f, 1);
+
     public void FillTable(List<List<string>> data, List<CellType> types, int dimensions)
     {
+        int j = 0;
         foreach (var dataRow in data)
         {
+            j++;
             var newRow = Instantiate(row, table.transform);
             for(int i = 0; i < dimensions; i++)
             {
@@ -36,12 +41,28 @@ public class TableFiller : MonoBehaviour
                 {
                     case CellType.InputField:
                         newRow.transform.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().text = dataRow[i];
+                        newRow.transform.GetChild(i).GetChild(0).GetComponent<Image>().color = j % 2 == 0 ? lightGray : white;
                         break;
                     case CellType.FKButton:
-                        newRow.transform.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().text = dataRow[i];
+                        newRow.transform.GetChild(i).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = dataRow[i];
+                        if(j % 2 == 0)
+                        {
+                            newRow.transform.GetChild(i).GetChild(0).GetComponent<Button>().colors = new ColorBlock()
+                            {
+                                normalColor = lightGray,
+                                highlightedColor = new Color(0.8f, 0.8f, 0.8f, 1),
+                                pressedColor = new Color(0.7f, 0.7f, 0.7f, 1),
+                                disabledColor = lightGray,
+                                selectedColor = lightGray,
+                                colorMultiplier = 1,
+                                fadeDuration = 0.1f
+                            };
+                        }
                         break;
                     case CellType.Toggle:
                         newRow.transform.GetChild(i).GetChild(0).GetComponent<Toggle>().isOn = (dataRow[i] != "0");
+                        newRow.transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().color = j % 2 == 0 ? lightGray : white;
+
                         break;
                 }
                 

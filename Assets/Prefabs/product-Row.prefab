@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preferredHeight: 63.38
-  dontUseTableRowBackground: 0
+  dontUseTableRowBackground: 1
   m_tableLayout: {fileID: 0}
 --- !u!1001 &917614906810893155
 PrefabInstance:
@@ -550,6 +550,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3990111438217105643, guid: b242efe6bd28eff4eb57b5ee80ecf2fa, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4830257752706203215, guid: b242efe6bd28eff4eb57b5ee80ecf2fa, type: 3}
+      propertyPath: m_Interactable
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6663461928270272590, guid: b242efe6bd28eff4eb57b5ee80ecf2fa, type: 3}
@@ -926,6 +930,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3209694809233040948}
     m_Modifications:
+    - target: {fileID: 2597898039662220288, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
+      propertyPath: m_Value
+      value: 0.192
+      objectReference: {fileID: 0}
     - target: {fileID: 3226433191698872515, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: attribute
       value: charachteristics
@@ -1017,6 +1025,22 @@ PrefabInstance:
     - target: {fileID: 5926541550857318147, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: m_Name
       value: Input-Text-Multiline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918023844704738172, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 4.428332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8698219402750317986, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8698219402750317986, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8698219402750317986, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9116964805366428310, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: m_AnchorMax.y

@@ -8,8 +8,10 @@ public abstract class InputField : MonoBehaviour
 {
     private TMPro.TMP_InputField inputField;
     public string oldText;
+    protected Transform parent => transform.parent.parent;
 
     public string attribute;
+    public bool updateRowOnEdit;
 
     void Awake()
     {

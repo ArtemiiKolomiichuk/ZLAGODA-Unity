@@ -252,6 +252,10 @@ PrefabInstance:
       propertyPath: attribute
       value: base_price
       objectReference: {fileID: 0}
+    - target: {fileID: 2768379640330637747, guid: b242efe6bd28eff4eb57b5ee80ecf2fa, type: 3}
+      propertyPath: updateRowOnEdit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3990111438217105643, guid: b242efe6bd28eff4eb57b5ee80ecf2fa, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -932,7 +936,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2597898039662220288, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: m_Value
-      value: 0.192
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3226433191698872515, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: attribute
@@ -1028,7 +1032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7918023844704738172, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4.428332
+      value: 5.7510805
       objectReference: {fileID: 0}
     - target: {fileID: 8698219402750317986, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: m_AnchorMax.x

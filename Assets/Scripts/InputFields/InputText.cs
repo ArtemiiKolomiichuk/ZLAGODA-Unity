@@ -9,7 +9,7 @@ public class InputText : InputField
         SceneController.Instance.UpdateRow(
             attribute, 
             newText, 
-            transform.parent.parent.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_InputField>().text);
+            parent.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_InputField>().text);
         return true;
     }
 }

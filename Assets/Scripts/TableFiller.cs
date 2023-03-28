@@ -35,38 +35,7 @@ public class TableFiller : MonoBehaviour
         {
             j++;
             var newRow = Instantiate(row, table.transform);
-            for(int i = 0; i < dimensions; i++)
-            {
-                switch (types[i])
-                {
-                    case CellType.InputField:
-                        newRow.transform.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().text = dataRow[i];
-                        newRow.transform.GetChild(i).GetChild(0).GetComponent<Image>().color = j % 2 == 0 ? lightGray : white;
-                        break;
-                    case CellType.FKButton:
-                        newRow.transform.GetChild(i).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = dataRow[i];
-                        if(j % 2 == 0)
-                        {
-                            newRow.transform.GetChild(i).GetChild(0).GetComponent<Button>().colors = new ColorBlock()
-                            {
-                                normalColor = lightGray,
-                                highlightedColor = new Color(0.8f, 0.8f, 0.8f, 1),
-                                pressedColor = new Color(0.7f, 0.7f, 0.7f, 1),
-                                disabledColor = lightGray,
-                                selectedColor = lightGray,
-                                colorMultiplier = 1,
-                                fadeDuration = 0.1f
-                            };
-                        }
-                        break;
-                    case CellType.Toggle:
-                        newRow.transform.GetChild(i).GetChild(0).GetComponent<Toggle>().isOn = (dataRow[i] != "0");
-                        newRow.transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().color = j % 2 == 0 ? lightGray : white;
-
-                        break;
-                }
-                
-            }
+            PaintRow(dataRow, types, newRow.transform, dimensions, j%2 == 0);
         }
         var addRow = Instantiate(addRowButton, table.transform);
 
@@ -80,6 +49,41 @@ public class TableFiller : MonoBehaviour
         foreach (Transform child in layout.transform)
         {
             Destroy(child.gameObject);
+        }
+    }
+
+    internal void PaintRow(List<string> dataRow, List<CellType> types, Transform parent, int dimensions, bool even)
+    {
+        for(int i = 0; i < dimensions; i++)
+        {
+            switch (types[i])
+            {
+                case CellType.InputField:
+                    parent.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().text = dataRow[i];
+                    parent.GetChild(i).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
+                    break;
+                case CellType.FKButton:
+                    parent.GetChild(i).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = dataRow[i];
+                    if(even)
+                    {
+                        parent.GetChild(i).GetChild(0).GetComponent<Button>().colors = new ColorBlock()
+                        {
+                            normalColor = lightGray,
+                            highlightedColor = new Color(0.8f, 0.8f, 0.8f, 1),
+                            pressedColor = new Color(0.7f, 0.7f, 0.7f, 1),
+                            disabledColor = lightGray,
+                            selectedColor = lightGray,
+                            colorMultiplier = 1,
+                            fadeDuration = 0.1f
+                        };
+                    }
+                    break;
+                case CellType.Toggle:
+                    parent.GetChild(i).GetChild(0).GetComponent<Toggle>().isOn = (dataRow[i] != "0");
+                    parent.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
+                    break;
+            }
+            
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputNumeric : InputField
 {
@@ -11,8 +12,14 @@ public class InputNumeric : InputField
         {
             SceneController.Instance.UpdateRow(
                 attribute, 
-                value.ToString(), 
-                transform.parent.parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText);
+                value.ToString().Replace(',', '.'),
+                parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText);
+
+            if(updateRowOnEdit)
+            {
+                SceneController.Instance.RepaintRow(parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText, parent, 
+                gameObject.GetComponent<Image>().color.r < 0.98f);
+            }
             return true;
         }
         return false;

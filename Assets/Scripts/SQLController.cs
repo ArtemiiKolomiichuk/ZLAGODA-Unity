@@ -26,6 +26,7 @@ public class SQLController : MonoBehaviour
 
     public void ExecuteNonQuery(string sqlQuery)
     {
+        Debug.Log(sqlQuery);
         SQLiteCommand commandIn = new SQLiteCommand(connection);
         commandIn.CommandText = sqlQuery;
         commandIn.ExecuteNonQuery();

@@ -12,7 +12,7 @@ public class InputInteger : InputField
             SceneController.Instance.UpdateRow(
                 attribute, 
                 value.ToString(), 
-                transform.parent.parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText);
+                parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText);
             return true;
         }
         return false;

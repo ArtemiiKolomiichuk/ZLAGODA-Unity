@@ -57,6 +57,35 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    public void RepaintRow(string PK, Transform parent, bool even)
+    {
+        string pkName = "";
+        switch (currentEntity)
+        {
+            case "Category":
+                pkName = "category_number";
+                break;
+            case "Product":
+                pkName = "id_product";
+                break;
+        }
+        string query = @$"
+        SELECT 
+            *
+        FROM
+            {currentEntity}
+        WHERE
+            {pkName} = {PK};";
+        switch (currentEntity)
+        {
+            case "Product":
+                var products = SQLController.Instance.ExecuteQuery<Product>(query);
+                TableFiller.Instance.PaintRow(products[0].ToList(), Product.CellTypes(), parent, Product.dimensions, even);
+                break;
+        }
+        
+    }
+
     public void ReloadOrdered(string attr, bool desc)
     {
         TableFiller.Instance.DeleteAllChildren();

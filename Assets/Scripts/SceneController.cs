@@ -22,18 +22,47 @@ public class SceneController : MonoBehaviour
 
     public Scrollbar scrollbar;
     public string currentEntity;
-
-
+    public string whereHaving = "";
+    public string selectFrom
+    {
+        get
+        {
+            switch (currentEntity)
+            {
+                case "Category":
+                case "Product":
+                    return @$"
+                    SELECT 
+                        * 
+                    FROM 
+                        {currentEntity}";
+                default:
+                    throw new NotImplementedException($"SelectFrom for \"{currentEntity}\"");
+            }
+        }
+    }
+    private string pkName
+    {
+        get
+        {
+            switch (currentEntity)
+            {
+                case "Category":
+                    return "category_number";
+                case "Product":
+                    return "id_product";
+                default:
+                    throw new NotImplementedException($"PK name for \"{currentEntity}\"");
+            }
+        }
+    }
     private void Start()
     {
         scrollbar.value = 1;
         string query = @$"
-        SELECT 
-            *
-        FROM
-            {currentEntity};";
+        {selectFrom}
+        {whereHaving};";
 
-        
         switch(currentEntity)
         {
             case "Category":
@@ -59,21 +88,8 @@ public class SceneController : MonoBehaviour
 
     public void RepaintRow(string PK, Transform parent, bool even)
     {
-        string pkName = "";
-        switch (currentEntity)
-        {
-            case "Category":
-                pkName = "category_number";
-                break;
-            case "Product":
-                pkName = "id_product";
-                break;
-        }
         string query = @$"
-        SELECT 
-            *
-        FROM
-            {currentEntity}
+        {selectFrom}
         WHERE
             {pkName} = {PK};";
         switch (currentEntity)
@@ -82,18 +98,17 @@ public class SceneController : MonoBehaviour
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
                 TableFiller.Instance.PaintRow(products[0].ToList(), Product.CellTypes(), parent, Product.dimensions, even);
                 break;
+            default:
+                throw new NotImplementedException($"Repainting the row of \"{currentEntity.ToString()}\"");
         }
-        
     }
 
     public void ReloadOrdered(string attr, bool desc)
     {
         TableFiller.Instance.DeleteAllChildren();
         string query = @$"
-        SELECT 
-            *
-        FROM
-            {currentEntity}
+        {selectFrom}
+        {whereHaving}
         ORDER BY
             {attr} {(desc ? "DESC" : "ASC")};";
 
@@ -117,21 +132,13 @@ public class SceneController : MonoBehaviour
                 }
                 TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions);
                 break;
+            default:
+                throw new NotImplementedException($"Ordering the table of \"{currentEntity.ToString()}\"");
         }
     }
 
     public void UpdateRow(string attr, string value, string PK)
     {       
-        string pkName = "";
-        switch (currentEntity)
-        {
-            case "Category":
-                pkName = "category_number";
-                break;
-            case "Product":
-                pkName = "id_product";
-                break;
-        }
         string query = @$"
         UPDATE
             {currentEntity}
@@ -144,16 +151,6 @@ public class SceneController : MonoBehaviour
 
     internal void DeleteRow(int PK)
     {
-        string pkName = "";
-        switch (currentEntity)
-        {
-            case "Category":
-                pkName = "category_number";
-                break;
-            case "Product":
-                pkName = "id_product";
-                break;
-        }
         string query = @$"
         DELETE FROM
             {currentEntity}

@@ -34,6 +34,7 @@ public class SQLController : MonoBehaviour
 
     public List<T> ExecuteQuery<T>(string sqlQuery) where T : new()
     {
+        Debug.Log(sqlQuery);
         return connection.Query<T>(sqlQuery);
     }
 }

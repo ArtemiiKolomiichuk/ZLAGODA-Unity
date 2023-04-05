@@ -8,7 +8,7 @@ public class InputNumeric : InputField
     public override bool TryUpdate(string newText)
     {
         decimal value;
-        if (decimal.TryParse(newText, out value))
+        if (decimal.TryParse(newText.Replace('.', ','), out value))
         {
             SceneController.Instance.UpdateRow(
                 attribute, 

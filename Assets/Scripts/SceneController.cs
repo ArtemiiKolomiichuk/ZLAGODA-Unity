@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Entities;
 using System;
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
@@ -18,9 +18,20 @@ public class SceneController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        SceneManager.sceneLoaded += 
+            (scene, mode) =>
+            {
+                if (scene.name != "Menu")
+                {
+                    Load();
+                }
+                else
+                {
+                    currentEntity = "";
+                    whereHaving = "";
+                }
+            };
     }
-
-    public Scrollbar scrollbar;
     public string currentEntity;
     public string whereHaving = "";
     public string selectFrom
@@ -56,9 +67,9 @@ public class SceneController : MonoBehaviour
             }
         }
     }
-    private void Start()
+
+    private void Load()
     {
-        scrollbar.value = 1;
         string query = @$"
         {selectFrom}
         {whereHaving};";

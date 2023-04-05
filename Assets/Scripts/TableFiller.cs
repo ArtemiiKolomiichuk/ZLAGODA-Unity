@@ -27,6 +27,12 @@ public class TableFiller : MonoBehaviour
 
     private static Color white = new Color(1, 1, 1, 1);
     private static Color lightGray = new Color(0.9f, 0.9f, 0.9f, 1);
+    
+    public Scrollbar scrollbar;
+    private void Start()
+    {
+        scrollbar.value = 1;
+    }
 
     public void FillTable(List<List<string>> data, List<CellType> types, int dimensions)
     {

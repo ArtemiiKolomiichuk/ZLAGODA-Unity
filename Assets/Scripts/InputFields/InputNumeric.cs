@@ -10,10 +10,13 @@ public class InputNumeric : InputField
         decimal value;
         if (decimal.TryParse(newText.Replace('.', ','), out value))
         {
-            SceneController.Instance.UpdateRow(
+            if(!SceneController.Instance.TryUpdateRow(
                 attribute, 
                 value.ToString().Replace(',', '.'),
-                parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText);
+                parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText))
+            {
+                return false;
+            }
 
             if(updateRowOnEdit)
             {

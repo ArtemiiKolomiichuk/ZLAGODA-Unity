@@ -25,12 +25,21 @@ public class SQLController : MonoBehaviour
         connection = new SQLiteConnection(connectionString);
     }
 
-    public void ExecuteNonQuery(string sqlQuery)
+    public bool TryExecuteNonQuery(string sqlQuery)
     {
         Debug.Log(sqlQuery);
-        SQLiteCommand commandIn = new SQLiteCommand(connection);
-        commandIn.CommandText = sqlQuery;
-        commandIn.ExecuteNonQuery();
+        try
+        {
+            SQLiteCommand commandIn = new SQLiteCommand(connection);
+            commandIn.CommandText = sqlQuery;
+            commandIn.ExecuteNonQuery();  
+            return true;                      
+        }
+        catch (SQLiteException e)
+        {
+            Debug.LogWarning($"{e.GetType()}: {e.Message}");
+            return false;
+        }
     }
 
     public List<T> ExecuteQuery<T>(string sqlQuery) where T : new()

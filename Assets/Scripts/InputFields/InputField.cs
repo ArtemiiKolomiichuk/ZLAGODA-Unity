@@ -9,7 +9,6 @@ public abstract class InputField : MonoBehaviour
     private TMPro.TMP_InputField inputField;
     public string oldText;
     protected Transform parent => transform.parent.parent;
-
     public string attribute;
     public bool updateRowOnEdit;
 
@@ -23,7 +22,6 @@ public abstract class InputField : MonoBehaviour
         inputField.onDeselect.AddListener(OnDeselect);
         oldText = inputField.text;
     }
-
     private void OnSelect(string newText)
     {
         oldText = newText;
@@ -32,7 +30,7 @@ public abstract class InputField : MonoBehaviour
     {
         if (newText != oldText)
         {
-            //empty
+            //TODO: nullable
             if(newText == "")
             {
                 inputField.text = oldText;
@@ -42,6 +40,7 @@ public abstract class InputField : MonoBehaviour
                 if(!TryUpdate(newText))
                 {
                     inputField.text = oldText;
+                    Debug.LogWarning($"{new FormatException().GetType()}: '{newText}' is not a valid value for '{attribute}'");
                 }
                 else
                 {

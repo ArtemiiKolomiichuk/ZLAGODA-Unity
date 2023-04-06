@@ -9,10 +9,13 @@ public class InputInteger : InputField
         int value;
         if (int.TryParse(newText, out value))
         {
-            SceneController.Instance.UpdateRow(
+            if(!SceneController.Instance.TryUpdateRow(
                 attribute, 
                 value.ToString(), 
-                parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText);
+                parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText))
+            {
+                return false;
+            }
             return true;
         }
         return false;

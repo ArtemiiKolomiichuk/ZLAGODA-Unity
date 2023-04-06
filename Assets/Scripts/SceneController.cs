@@ -148,7 +148,7 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    public void UpdateRow(string attr, string value, string PK)
+    public bool TryUpdateRow(string attr, string value, string PK)
     {       
         string query = @$"
         UPDATE
@@ -157,26 +157,26 @@ public class SceneController : MonoBehaviour
             {attr} = '{value}'
         WHERE
             {pkName} = {PK};";
-        SQLController.Instance.ExecuteNonQuery(query);
+        return SQLController.Instance.TryExecuteNonQuery(query);
     }
 
-    internal void DeleteRow(int PK)
+    internal bool TryDeleteRow(int PK)
     {
         string query = @$"
         DELETE FROM
             {currentEntity}
         WHERE
             {pkName} = {PK};";
-        SQLController.Instance.ExecuteNonQuery(query);
+        return SQLController.Instance.TryExecuteNonQuery(query);
     }
 
-    public void AddRow(List<string> values)
+    public bool TryAddRow(List<string> values)
     {
         string query = @$"
         INSERT INTO
             {currentEntity}
         VALUES
             ({string.Join(", ", values)});";
-        SQLController.Instance.ExecuteNonQuery(query);
+        return SQLController.Instance.TryExecuteNonQuery(query);
     }
 }

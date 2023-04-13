@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuController : MonoBehaviour
@@ -8,6 +6,10 @@ public class MenuController : MonoBehaviour
     {
         switch (code)
         {
+            case "1.Category":
+                SceneController.Instance.currentEntity = "Category";
+                SceneManager.LoadScene("Category");
+                break;
             case "1.Product":
                 SceneController.Instance.currentEntity = "Product";
                 SceneManager.LoadScene("Product");

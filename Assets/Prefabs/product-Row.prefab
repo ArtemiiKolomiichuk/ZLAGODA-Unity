@@ -832,6 +832,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cell-Boolean
       objectReference: {fileID: 0}
+    - target: {fileID: 8287354535795016573, guid: d60bcba1ec5eaaf4b935e601c8679a78, type: 3}
+      propertyPath: attribute
+      value: discounted
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287354535795016573, guid: d60bcba1ec5eaaf4b935e601c8679a78, type: 3}
+      propertyPath: updateRowOnEdit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9009848669245956784, guid: d60bcba1ec5eaaf4b935e601c8679a78, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -936,7 +944,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2597898039662220288, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: m_Value
-      value: 0.1
+      value: -0.071
       objectReference: {fileID: 0}
     - target: {fileID: 3226433191698872515, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: attribute
@@ -1032,7 +1040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7918023844704738172, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 5.7510805
+      value: 7.9873743
       objectReference: {fileID: 0}
     - target: {fileID: 8698219402750317986, guid: 18478184e0454dd488a6bce5ac58e9bf, type: 3}
       propertyPath: m_AnchorMax.x

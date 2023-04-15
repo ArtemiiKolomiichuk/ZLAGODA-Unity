@@ -19,28 +19,6 @@ namespace Entities
         }
     }
 
-    public class Address : Entity
-    {
-        public static new readonly int dimensions = 4;
-        public int id_address { get; set; }
-        public string city { get; set; }
-        public string street { get; set; }
-        public int index { get; set; }
-
-        public override string ToString()
-        {
-            return $"Address: \n\aid_address: {id_address}, \n\acity: {city}, \n\astreet: {street}, \n\aindex: {index}";
-        }
-        public override List<string> ToList()
-        {
-            return new List<string> { id_address.ToString(), city, street, index.ToString() };
-        }
-        public static new List<CellType> CellTypes()
-        {
-            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField };
-        }
-    }
-
     public class Bill : Entity
     {
         public static new readonly int dimensions = 7;
@@ -113,75 +91,64 @@ namespace Entities
 
     public class Customer_card : Entity
     {
-        public static new readonly int dimensions = 5;
+        public static new readonly int dimensions = 9;
         public int card_number { get; set; }
-        public int cust_pib { get; set; }
+        public string name { get; set; }
+        public string last_name { get; set; }
+        public string patronymic { get; set; }
         public string phone_number { get; set; }
-        public int cust_address { get; set; }
+        public string city { get; set; }
+        public string street { get; set; }
+        public int index { get; set; }
         public decimal percent { get; set; }
 
         public override string ToString()
         {
-            return $"Customer_card: \n\acard_number: {card_number}, \n\acust_pib: {cust_pib}, \n\aphone_number: {phone_number}, \n\acust_address: {cust_address}, \n\apercent: {percent}";
+            return $"Customer_card: \n\acard_number: {card_number}, \n\aname: {name}, \n\alast_name: {last_name}, \n\apatronymic: {patronymic}, \n\aphone_number: {phone_number}, \n\acity: {city}, \n\astreet: {street}, \n\aindex: {index}, \n\apercent: {percent}";
         }
+
         public override List<string> ToList()
         {
-            return new List<string> { card_number.ToString(), cust_pib.ToString(), phone_number, cust_address.ToString(), percent.ToString() };
+            return new List<string> { card_number.ToString(), name, last_name, patronymic, phone_number, city, street, index.ToString(), percent.ToString() };
         }
         public static new List<CellType> CellTypes()
         {
-            return new List<CellType> { CellType.InputField, CellType.FKButton, CellType.InputField, CellType.FKButton, CellType.InputField };
+            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField };
         }
     }
 
     public class Employee : Entity
     {
-        public static new readonly int dimensions = 8;
+        public static new readonly int dimensions = 12;
         public int id_employee { get; set; }
-        public int empl_pib { get; set; }
+        public string name { get; set; }
+        public string last_name { get; set; }
+        public string patronymic { get; set; }
         public string role { get; set; }
         public decimal salary { get; set; }
         public string date_of_start { get; set; }
         public string date_of_birth { get; set; }
         public string phone_number { get; set; }
-        public int empl_address { get; set; }
+        public string city { get; set; }
+        public string street { get; set; }
+        public int index { get; set; }
 
         public override string ToString()
         {
-            return $"Employee: \n\aid_employee: {id_employee}, \n\aempl_pib: {empl_pib}, \n\arole: {role}, \n\asalary: {salary}, \n\adate_of_start: {date_of_start}, \n\adate_of_birth: {date_of_birth}, \n\aphone_number: {phone_number}, \n\aempl_address: {empl_address}";
-        }
-        public override List<string> ToList()
-        {
-            return new List<string> { id_employee.ToString(), empl_pib.ToString(), role, salary.ToString(), date_of_start, date_of_birth, phone_number, empl_address.ToString() };
-        }
-        public static new List<CellType> CellTypes()
-        {
-            return new List<CellType> { CellType.InputField, CellType.FKButton, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.FKButton };
-        }
-    }
-
-    public class PIB : Entity
-    {
-        public static new readonly int dimensions = 4;
-        public int id_pib { get; set; }
-        public string name { get; set; }
-        public string last_name { get; set; }
-        public string patronymic { get; set; }
-
-        public override string ToString()
-        {
-            return $"PIB: \n\aid_pib: {id_pib}, \n\aname: {name}, \n\alast_name: {last_name}, \n\apatronymic: {patronymic}";
+            return $"Employee: \n\aid_employee: {id_employee}, \n\aname: {name}, \n\alast_name: {last_name}, \n\apatronymic: {patronymic}, \n\arole: {role}, \n\asalary: {salary}, \n\adate_of_start: {date_of_start}, \n\adate_of_birth: {date_of_birth}, \n\aphone_number: {phone_number}, \n\acity: {city}, \n\astreet: {street}, \n\aindex: {index}";
         }
 
         public override List<string> ToList()
         {
-            return new List<string> { id_pib.ToString(), name, last_name, patronymic };
+            return new List<string> { id_employee.ToString(), name, last_name, patronymic, role, salary.ToString(), date_of_start, date_of_birth, phone_number, city, street, index.ToString() };
         }
+
         public static new List<CellType> CellTypes()
         {
-            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField };
+            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField,CellType.InputField, CellType.InputField, CellType.InputField,CellType.InputField, CellType.InputField, CellType.InputField};
         }
     }
+
 
     public class Product : Entity
     {

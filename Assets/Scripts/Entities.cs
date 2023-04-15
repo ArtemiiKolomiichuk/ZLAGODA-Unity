@@ -52,7 +52,7 @@ namespace Entities
 
         public override string ToString()
         {
-            return $"Category: \n\acategory_number: {category_number}, \n\acategory_name: {category_name}";
+            return $"{category_number}: {category_name}";
         }
         public override List<string> ToList()
         {

@@ -34,14 +34,14 @@ public class TableFiller : MonoBehaviour
         scrollbar.value = 1;
     }
 
-    public void FillTable(List<List<string>> data, List<CellType> types, int dimensions)
+    public void FillTable(List<List<string>> data, List<CellType> types, int dimensions, List<List<string>> FKs)
     {
         int j = 0;
         foreach (var dataRow in data)
         {
             j++;
             var newRow = Instantiate(row, table.transform);
-            PaintRow(dataRow, types, newRow.transform, dimensions, j%2 == 0);
+            PaintRow(dataRow, types, newRow.transform, dimensions, j%2 == 0, FKs);
         }
         var addRow = Instantiate(addRowButton, table.transform);
 
@@ -58,7 +58,7 @@ public class TableFiller : MonoBehaviour
         }
     }
 
-    internal void PaintRow(List<string> dataRow, List<CellType> types, Transform parent, int dimensions, bool even)
+    internal void PaintRow(List<string> dataRow, List<CellType> types, Transform parent, int dimensions, bool even, List<List<string>> FKs)
     {
         for(int i = 0; i < dimensions; i++)
         {
@@ -69,10 +69,11 @@ public class TableFiller : MonoBehaviour
                     parent.GetChild(i).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
                     break;
                 case CellType.FKButton:
-                    parent.GetChild(i).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = dataRow[i];
+                    var input = parent.GetChild(i).GetChild(0).GetComponent<InputFK>();
+                    input.Init(FKs[input.index], dataRow[i]);
                     if(even)
                     {
-                        parent.GetChild(i).GetChild(0).GetComponent<Button>().colors = new ColorBlock()
+                        input.dropdown.colors = new ColorBlock()
                         {
                             normalColor = lightGray,
                             highlightedColor = new Color(0.8f, 0.8f, 0.8f, 1),

@@ -68,6 +68,23 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    public List<string> GetFKs(string entity)
+    {
+        switch (entity)
+        {
+            case "Category":
+                var categories = SQLController.Instance.ExecuteQuery<Category>("SELECT * FROM Category");
+                List<string> categoriesData = new List<string>();
+                foreach (var category in categories)
+                {
+                    categoriesData.Add(category.ToString());
+                }
+                return categoriesData;
+            default:
+                throw new NotImplementedException($"FKs for \"{entity}\"");
+        }
+    }
+
     private void Load()
     {
         string query = @$"
@@ -83,7 +100,7 @@ public class SceneController : MonoBehaviour
                 {
                     categoriesData.Add(category.ToList());
                 }
-                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions);
+                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions, null);
                 break;
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
@@ -92,7 +109,7 @@ public class SceneController : MonoBehaviour
                 {
                     productsData.Add(product.ToList());
                 }
-                TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions);
+                TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions, new List<List<string>>{GetFKs("Category")});
                 break;
         }
     }
@@ -107,7 +124,7 @@ public class SceneController : MonoBehaviour
         {
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
-                TableFiller.Instance.PaintRow(products[0].ToList(), Product.CellTypes(), parent, Product.dimensions, even);
+                TableFiller.Instance.PaintRow(products[0].ToList(), Product.CellTypes(), parent, Product.dimensions, even, new List<List<string>>{GetFKs("Category")});
                 break;
             default:
                 throw new NotImplementedException($"Repainting the row of \"{currentEntity.ToString()}\"");
@@ -132,7 +149,7 @@ public class SceneController : MonoBehaviour
                 {
                     categoriesData.Add(category.ToList());
                 }
-                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions);
+                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions, null);
                 break;
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
@@ -141,7 +158,7 @@ public class SceneController : MonoBehaviour
                 {
                     productsData.Add(product.ToList());
                 }
-                TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions);
+                TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions, new List<List<string>>{GetFKs("Category")});
                 break;
             default:
                 throw new NotImplementedException($"Ordering the table of \"{currentEntity.ToString()}\"");

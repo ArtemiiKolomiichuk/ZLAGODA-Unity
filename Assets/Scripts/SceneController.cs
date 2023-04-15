@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     public static SceneController Instance;
-    private void Awake()
+    private void Start()
     {
         if (Instance == null)
         {

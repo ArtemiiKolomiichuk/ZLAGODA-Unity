@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Category.unity
     guid: 3773c773c2a0f944798f16d3e30e21e8
+  - enabled: 1
+    path: Assets/Scenes/Print.unity
+    guid: 0228d8ad9df35284280c6a2db6892540
   m_configObjects: {}

@@ -5,17 +5,18 @@ using UnityEngine.UI;
 
 public class OnInsertButton : MonoBehaviour
 {
-    private Button button;
-
+    public static OnInsertButton Instance;
     private void Awake()
     {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(OnInsertButtonClick);
-    }
-
-    private void OnInsertButtonClick()
-    {
-        //TODO:
-        Debug.Log("Insert");
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            GetComponent<Button>().onClick.AddListener(Instance.GetComponent<Button>().onClick.Invoke);
+            Destroy(Instance.gameObject);
+            Instance = this;
+        }
     }
 }

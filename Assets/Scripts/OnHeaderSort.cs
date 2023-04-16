@@ -13,6 +13,15 @@ public class OnHeaderSort : MonoBehaviour
         transform.parent.GetChild(1).GetComponent<Image>().enabled = false;
     }
 
+    public static void ResetSorting()
+    {
+        desc = true;
+        foreach (var header in FindObjectsOfType<OnHeaderSort>())
+        {
+            header.HideSortImage();
+        }
+    }
+
     private void OnMouseUpAsButton()
     {
         foreach (var header in FindObjectsOfType<OnHeaderSort>())

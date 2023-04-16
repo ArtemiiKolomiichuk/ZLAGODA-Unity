@@ -9,15 +9,31 @@ public class InputFK : MonoBehaviour
 {
     [SerializeField] private string attribute;
     [NonSerialized] public TMP_Dropdown dropdown;
+    [SerializeField] private bool useOnValueChanged = true;
     public int index = 0;
     private void Awake()
     {
         dropdown = GetComponent<TMP_Dropdown>();
-        dropdown.onValueChanged.AddListener(OnValueChanged);
+    }
+
+    private void Start() 
+    {
+        if (useOnValueChanged)
+        {
+            dropdown.onValueChanged.AddListener(OnValueChanged);
+        }
+    }
+
+    public void Init(List<string> options)
+    {
+        dropdown.ClearOptions();
+        dropdown.AddOptions(options);
+        dropdown.value = 0;
     }
 
     public void Init(List<string> options, string currentPK)
     {
+        int index = 0;
         dropdown.ClearOptions();
         dropdown.AddOptions(options);
         for (int i = 0; i < options.Count; i++)
@@ -29,6 +45,11 @@ public class InputFK : MonoBehaviour
             }
         }
         dropdown.value = index;
+    }
+
+    public string GetPK()
+    {
+        return dropdown.options[dropdown.value].text.Substring(0, dropdown.options[dropdown.value].text.IndexOf(":"));
     }
 
     private void OnValueChanged(int optionIndex)

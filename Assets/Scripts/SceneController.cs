@@ -68,24 +68,48 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    public List<CellType> CellTypes()
+    {
+        switch (currentEntity)
+        {
+            case "Category":
+                return Category.CellTypes();
+            case "Product":
+                return Product.CellTypes();
+            default:
+                throw new NotImplementedException($"CellTypes for \"{currentEntity}\"");
+        }
+    }
+
+    public List<string> FKEntities()
+    {
+        switch (currentEntity)
+        {
+            case "Product":
+                return new List<string> { "Category" };
+            default:
+                throw new NotImplementedException($"FKEntities for \"{currentEntity}\"");
+        }
+    }
+
     public List<string> GetFKs(string entity)
     {
         switch (entity)
         {
             case "Category":
                 var categories = SQLController.Instance.ExecuteQuery<Category>("SELECT * FROM Category");
-                List<string> categoriesData = new List<string>();
+                List<string> categoryFKs = new List<string>();
                 foreach (var category in categories)
                 {
-                    categoriesData.Add(category.ToString());
+                    categoryFKs.Add(category.ToString());
                 }
-                return categoriesData;
+                return categoryFKs;
             default:
                 throw new NotImplementedException($"FKs for \"{entity}\"");
         }
     }
 
-    private void Load()
+    public void Load()
     {
         string query = @$"
         {selectFrom}

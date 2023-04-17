@@ -26,6 +26,9 @@ public class MenuController : MonoBehaviour
                 "WHERE discounted = 0";
                 SceneManager.LoadScene("Product");
                 break;
+            case "Print":
+                SceneManager.LoadScene("Print");                
+                break;
             default:
                 throw new System.NotImplementedException($"LoadScene for \"{code}\"");
         }

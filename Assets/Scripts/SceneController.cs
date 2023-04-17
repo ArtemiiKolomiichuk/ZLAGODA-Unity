@@ -21,7 +21,7 @@ public class SceneController : MonoBehaviour
         SceneManager.sceneLoaded += 
             (scene, mode) =>
             {
-                if (scene.name != "Menu")
+                if (scene.name != "Menu" && scene.name != "Print" && scene.name != "Authentication")
                 {
                     Load();
                 }

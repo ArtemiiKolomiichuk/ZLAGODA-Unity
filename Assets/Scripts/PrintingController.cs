@@ -4,31 +4,76 @@ using UnityEngine.SceneManagement;
 
 public class PrintingController : MonoBehaviour
 {
-    public static PrintingController Instance { get; private set; }
-    private void Awake()
+    string path = Application.streamingAssetsPath + "\\screenshot.png";
+    [SerializeField] private GameObject[] elementsToHide;
+
+    public void OpenScreenshotPaint()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        DontDestroyOnLoad(this);
+        StartCoroutine(Paint());
     }
+
     public void PrintScreenshot()
     {
         StartCoroutine(Print());
     }
 
+    public void OpenScreenshotExplorer()
+    {
+        StartCoroutine(Explorer());
+    }
+
+    private void HideElements()
+    {
+        foreach (GameObject element in elementsToHide)
+        {
+            element.SetActive(false);
+        }
+    }
+
+    private void ShowElements()
+    {
+        foreach (GameObject element in elementsToHide)
+        {
+            element.SetActive(true);
+        }
+    }
+
+    IEnumerator TakeScreenshot()
+    {
+        HideElements();
+        Screen.SetResolution(1485, 1050, FullScreenMode.Windowed);
+        yield return new WaitForSecondsRealtime(0.1f);
+        ScreenCapture.CaptureScreenshot(path);
+        yield return new WaitForSecondsRealtime(0.1f);
+        Screen.SetResolution(1366, 768, FullScreenMode.Windowed);
+        ShowElements();
+    }
+
+    IEnumerator Explorer()
+    {
+        yield return TakeScreenshot();
+        System.Diagnostics.Process.Start($"\"{path}\"");
+    }
+
+    IEnumerator Paint()
+    {
+        yield return TakeScreenshot();
+        System.Diagnostics.Process.Start("mspaint", $"\"{path}\"");
+    }
+
     IEnumerator Print()
     {
-        Screen.SetResolution(2970, 2100, FullScreenMode.Windowed);
-        SceneManager.LoadScene("Print");
-        yield return new WaitForSeconds(0.1f);
-        string path = Application.streamingAssetsPath + "\\screenshot.png";
-        ScreenCapture.CaptureScreenshot(path);
-        yield return new WaitForSeconds(0.2f);
-        System.Diagnostics.Process.Start("mspaint", $"\"{path}\"");
-        SceneManager.LoadScene("Menu");
-        Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
+        yield return TakeScreenshot();
+        System.Diagnostics.Process.Start("mspaint", $"/p \"{path}\"");
+    }
+
+
+
+
+
+
+    public void ShowNextPage()
+    {
+        Debug.Log("ShowNextPage");
     }
 }

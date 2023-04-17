@@ -20,6 +20,7 @@ public class AuthenticationController : MonoBehaviour
     private void Login()
     {
         //TODO: Add authentication logic
+        Screen.SetResolution(1366, 768, FullScreenMode.Windowed);
         SceneManager.LoadScene("Menu");
     }
 }

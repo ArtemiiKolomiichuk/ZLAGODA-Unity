@@ -89,6 +89,10 @@ public class TableFiller : MonoBehaviour
                     parent.GetChild(i).GetChild(0).GetComponent<Toggle>().isOn = (dataRow[i] != "0");
                     parent.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
                     break;
+                case CellType.Date:
+                    parent.GetChild(i).GetChild(0).GetComponent<InputDate>().Init(dataRow[i]);
+                    //parent.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
+                    break;
             }
             
         }

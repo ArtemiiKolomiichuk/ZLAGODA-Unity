@@ -10,6 +10,10 @@ public class MenuController : MonoBehaviour
                 SceneController.Instance.currentEntity = "Category";
                 SceneManager.LoadScene("Category");
                 break;
+            case "1.Employee":
+                SceneController.Instance.currentEntity = "Employee";
+                SceneManager.LoadScene("Employee");
+                break;
             case "1.Product":
                 SceneController.Instance.currentEntity = "Product";
                 SceneManager.LoadScene("Product");

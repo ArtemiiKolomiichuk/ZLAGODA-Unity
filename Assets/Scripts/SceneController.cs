@@ -29,19 +29,26 @@ public class SceneController : MonoBehaviour
                 {
                     currentEntity = "";
                     whereHaving = "";
+                    selectFrom = "";
                 }
             };
     }
     public string currentEntity;
     public string whereHaving = "";
+    private string _selectFrom;
     public string selectFrom
     {
         get
         {
+            if(!string.IsNullOrEmpty(_selectFrom))
+            {
+                return _selectFrom;
+            }
             switch (currentEntity)
             {
                 case "Category":
                 case "Product":
+                case "Employee":
                     return @$"
                     SELECT 
                         * 
@@ -50,6 +57,10 @@ public class SceneController : MonoBehaviour
                 default:
                     throw new NotImplementedException($"SelectFrom for \"{currentEntity}\"");
             }
+        }
+        set
+        {
+            _selectFrom = value;
         }
     }
     private string pkName
@@ -62,6 +73,8 @@ public class SceneController : MonoBehaviour
                     return "category_number";
                 case "Product":
                     return "id_product";
+                case "Employee":
+                    return "id_employee";
                 default:
                     throw new NotImplementedException($"PK name for \"{currentEntity}\"");
             }
@@ -76,6 +89,8 @@ public class SceneController : MonoBehaviour
                 return Category.CellTypes();
             case "Product":
                 return Product.CellTypes();
+            case "Employee":
+                return Employee.CellTypes();
             default:
                 throw new NotImplementedException($"CellTypes for \"{currentEntity}\"");
         }
@@ -86,7 +101,7 @@ public class SceneController : MonoBehaviour
         switch (currentEntity)
         {
             case "Product":
-                return new List<string> { "Category" };
+                return new List<string> { "Category" }; 
             default:
                 throw new NotImplementedException($"FKEntities for \"{currentEntity}\"");
         }
@@ -104,6 +119,8 @@ public class SceneController : MonoBehaviour
                     categoryFKs.Add(category.ToString());
                 }
                 return categoryFKs;
+            case "Role":
+                return new List<string> {"1:Manager", "2:Seller"};
             default:
                 throw new NotImplementedException($"FKs for \"{entity}\"");
         }
@@ -135,6 +152,17 @@ public class SceneController : MonoBehaviour
                 }
                 TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions, new List<List<string>>{GetFKs("Category")});
                 break;
+            case "Employee":
+                var employees = SQLController.Instance.ExecuteQuery<Employee>(query);
+                List<List<string>> employeesData = new List<List<string>>();
+                foreach (var employee in employees)
+                {
+                    employeesData.Add(employee.ToList());
+                }
+                TableFiller.Instance.FillTable(employeesData, Employee.CellTypes(), Employee.dimensions, new List<List<string>>{GetFKs("Role")});
+                break;
+            default:
+                throw new NotImplementedException($"Loading the table of \"{currentEntity.ToString()}\"");
         }
     }
 

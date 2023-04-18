@@ -198,4 +198,26 @@ namespace Entities
             return new List<CellType> { CellType.InputField, CellType.FKButton, CellType.InputField, CellType.InputField };
         }
     }
+
+    public class SalesReport : Entity
+    {
+        public static new readonly int dimensions = 4;
+        public int id_product { get; set; }
+        public string product_name { get; set; }
+        public decimal total_amount { get; set; }
+        public decimal total_revenue { get; set; }
+
+        public override string ToString()
+        {
+            return $"SalesReport: \n\aid_product: {id_product}, \n\aproduct_name: {product_name}, \n\atotal_amount: {total_amount}, \n\atotal_revenue: {total_revenue}";
+        }
+        public override List<string> ToList()
+        {
+            return new List<string> { id_product.ToString(), product_name, total_amount.ToString(), total_revenue.ToString() };
+        }
+        public static new List<CellType> CellTypes()
+        {
+            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField };
+        }
+    }
 }

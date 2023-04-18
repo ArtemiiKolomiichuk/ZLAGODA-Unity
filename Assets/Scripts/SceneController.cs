@@ -212,6 +212,15 @@ public class SceneController : MonoBehaviour
                 }
                 TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions, new List<List<string>>{GetFKs("Category")});
                 break;
+            case "Employee":
+                var employees = SQLController.Instance.ExecuteQuery<Employee>(query);
+                List<List<string>> employeesData = new List<List<string>>();
+                foreach (var employee in employees)
+                {
+                    employeesData.Add(employee.ToList());
+                }
+                TableFiller.Instance.FillTable(employeesData, Employee.CellTypes(), Employee.dimensions, new List<List<string>>{GetFKs("Role")});
+                break;
             default:
                 throw new NotImplementedException($"Ordering the table of \"{currentEntity.ToString()}\"");
         }

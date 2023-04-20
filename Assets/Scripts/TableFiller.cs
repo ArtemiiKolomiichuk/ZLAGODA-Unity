@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Entities;
 using System;
+using static AccessController;
 
 public class TableFiller : MonoBehaviour
 {
@@ -34,18 +35,24 @@ public class TableFiller : MonoBehaviour
         scrollbar.value = 1;
     }
 
-    public void FillTable(List<List<string>> data, List<CellType> types, int dimensions, List<List<string>> FKs)
+    public void FillTable(List<List<string>> data, List<CellType> types, int dimensions, List<List<string>> FKs, AccessRights accessRights)
     {
         int j = 0;
         foreach (var dataRow in data)
         {
             j++;
             var newRow = Instantiate(row, table.transform);
-            PaintRow(dataRow, types, newRow.transform, dimensions, j%2 == 0, FKs);
+            PaintRow(dataRow, types, newRow.transform, dimensions, j%2 == 0, FKs, accessRights);
+            if(accessRights == AccessRights.View)
+            {
+                Destroy(newRow.transform.GetChild(newRow.transform.childCount - 1).gameObject);
+            }
         }
-        var addRow = Instantiate(addRowButton, table.transform);
-
-        layout.sizeDelta = new Vector2(layout.sizeDelta.x, (data.Count+1) * 63.38f);
+        if(accessRights == AccessRights.Edit)
+        {
+            var addRow = Instantiate(addRowButton, table.transform);
+        }
+        layout.sizeDelta = new Vector2(layout.sizeDelta.x, (data.Count + (accessRights == AccessRights.Edit ? 1 : 0)) * 63.38f);
         var posY = layout.sizeDelta.y <= 532f ? -268 : -layout.sizeDelta.y / 2;
         layout.localPosition = new Vector3(layout.localPosition.x, posY, layout.position.z);
     }
@@ -58,7 +65,7 @@ public class TableFiller : MonoBehaviour
         }
     }
 
-    internal void PaintRow(List<string> dataRow, List<CellType> types, Transform parent, int dimensions, bool even, List<List<string>> FKs)
+    internal void PaintRow(List<string> dataRow, List<CellType> types, Transform parent, int dimensions, bool even, List<List<string>> FKs, AccessRights accessRights)
     {
         for(int i = 0; i < dimensions; i++)
         {
@@ -67,6 +74,10 @@ public class TableFiller : MonoBehaviour
                 case CellType.InputField:
                     parent.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().text = dataRow[i];
                     parent.GetChild(i).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
+                    if(accessRights == AccessRights.View)
+                    {
+                        parent.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().interactable = false;
+                    }
                     break;
                 case CellType.FKButton:
                     var input = parent.GetChild(i).GetChild(0).GetComponent<InputFK>();
@@ -78,20 +89,36 @@ public class TableFiller : MonoBehaviour
                             normalColor = lightGray,
                             highlightedColor = new Color(0.8f, 0.8f, 0.8f, 1),
                             pressedColor = new Color(0.7f, 0.7f, 0.7f, 1),
-                            disabledColor = lightGray,
+                            disabledColor = new Color(0.7058F, 0.7058F, 0.7058F, 0.5f),
                             selectedColor = lightGray,
                             colorMultiplier = 1,
                             fadeDuration = 0.1f
                         };
                     }
+                    if(accessRights == AccessRights.View)
+                    {
+                        input.dropdown.interactable = false;
+                    }
                     break;
                 case CellType.Toggle:
                     parent.GetChild(i).GetChild(0).GetComponent<Toggle>().isOn = (dataRow[i] != "0");
                     parent.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
+                    if(accessRights == AccessRights.View)
+                    {
+                        parent.GetChild(i).GetChild(0).GetComponent<Toggle>().interactable = false;
+                        parent.GetChild(i).GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.5f);
+                    }
                     break;
                 case CellType.Date:
                     parent.GetChild(i).GetChild(0).GetComponent<InputDate>().Init(dataRow[i]);
-                    //parent.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
+                    //TODO: parent.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
+                    if(accessRights == AccessRights.View)
+                    {
+                        var picker = parent.GetChild(i).GetChild(0).GetComponent<InputDate>().GetDatePicker();
+                        picker.Disable();
+                        picker.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color = new Color(0.7843f, 0.7843f, 0.7843f, 0.5f);
+                        picker.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().color = new Color(0.7843f, 0.7843f, 0.7843f, 0.5f);
+                    }
                     break;
             }
             

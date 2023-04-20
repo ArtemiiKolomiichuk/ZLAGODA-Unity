@@ -32,4 +32,9 @@ public class InputDate : MonoBehaviour
             _datePicker.SelectedDate = new SerializableDate(DateTime.Parse(date));
         }
     }
+
+    public DatePicker GetDatePicker()
+    {
+        return _datePicker;
+    }
 }

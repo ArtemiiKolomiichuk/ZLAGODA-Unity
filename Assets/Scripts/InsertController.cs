@@ -35,7 +35,8 @@ public class InsertController : MonoBehaviour
                 index++;
             }
         }
-        OnInsertButton.Instance.GetComponent<Button>().onClick.AddListener(() => gameObject.SetActive(true));
+        if(OnInsertButton.Instance != null)
+            OnInsertButton.Instance.GetComponent<Button>().onClick.AddListener(() => gameObject.SetActive(true));
         Hide();
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using Entities;
 using System;
 using UnityEngine.SceneManagement;
+using static AccessController;
 
 public class SceneController : MonoBehaviour
 {
@@ -30,9 +31,11 @@ public class SceneController : MonoBehaviour
                     currentEntity = "";
                     whereHaving = "";
                     selectFrom = "";
+                    accessRights = AccessRights.View;
                 }
             };
     }
+    public AccessRights accessRights = AccessRights.View;
     public string currentEntity;
     public string whereHaving = "";
     private string _selectFrom;
@@ -141,7 +144,7 @@ public class SceneController : MonoBehaviour
                 {
                     categoriesData.Add(category.ToList());
                 }
-                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions, null);
+                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions, null, accessRights);
                 break;
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
@@ -150,7 +153,7 @@ public class SceneController : MonoBehaviour
                 {
                     productsData.Add(product.ToList());
                 }
-                TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions, new List<List<string>>{GetFKs("Category")});
+                TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions, new List<List<string>>{GetFKs("Category")}, accessRights);
                 break;
             case "Employee":
                 var employees = SQLController.Instance.ExecuteQuery<Employee>(query);
@@ -159,7 +162,7 @@ public class SceneController : MonoBehaviour
                 {
                     employeesData.Add(employee.ToList());
                 }
-                TableFiller.Instance.FillTable(employeesData, Employee.CellTypes(), Employee.dimensions, new List<List<string>>{GetFKs("Role")});
+                TableFiller.Instance.FillTable(employeesData, Employee.CellTypes(), Employee.dimensions, new List<List<string>>{GetFKs("Role")}, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Loading the table of \"{currentEntity.ToString()}\"");
@@ -176,7 +179,7 @@ public class SceneController : MonoBehaviour
         {
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
-                TableFiller.Instance.PaintRow(products[0].ToList(), Product.CellTypes(), parent, Product.dimensions, even, new List<List<string>>{GetFKs("Category")});
+                TableFiller.Instance.PaintRow(products[0].ToList(), Product.CellTypes(), parent, Product.dimensions, even, new List<List<string>>{GetFKs("Category")}, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Repainting the row of \"{currentEntity.ToString()}\"");
@@ -201,7 +204,7 @@ public class SceneController : MonoBehaviour
                 {
                     categoriesData.Add(category.ToList());
                 }
-                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions, null);
+                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions, null, accessRights);
                 break;
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
@@ -210,7 +213,7 @@ public class SceneController : MonoBehaviour
                 {
                     productsData.Add(product.ToList());
                 }
-                TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions, new List<List<string>>{GetFKs("Category")});
+                TableFiller.Instance.FillTable(productsData, Product.CellTypes(), Product.dimensions, new List<List<string>>{GetFKs("Category")}, accessRights);
                 break;
             case "Employee":
                 var employees = SQLController.Instance.ExecuteQuery<Employee>(query);
@@ -219,7 +222,7 @@ public class SceneController : MonoBehaviour
                 {
                     employeesData.Add(employee.ToList());
                 }
-                TableFiller.Instance.FillTable(employeesData, Employee.CellTypes(), Employee.dimensions, new List<List<string>>{GetFKs("Role")});
+                TableFiller.Instance.FillTable(employeesData, Employee.CellTypes(), Employee.dimensions, new List<List<string>>{GetFKs("Role")}, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Ordering the table of \"{currentEntity.ToString()}\"");

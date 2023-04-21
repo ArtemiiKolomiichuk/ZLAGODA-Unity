@@ -33,7 +33,7 @@ namespace Entities
 
         public override string ToString()
         {
-            return $"Bill: \n\acheck_number: {check_number}, \n\aid_employee: {id_employee}, \n\acard_number: {card_number}, \n\adiscount: {discount}, \n\aprint_date: {print_date}, \n\asum_total: {sum_total}, \n\avat: {vat}";
+            return $"{check_number}: employee {id_employee}, {print_date}";
         }
         public override List<string> ToList()
         {

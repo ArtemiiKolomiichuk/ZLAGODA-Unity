@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 464ca1c42c2b31e4a80eb5202cae8dd0
   - enabled: 1
+    path: Assets/Scenes/Check_row.unity
+    guid: cc8a2a519a51ae049a373644325178c2
+  - enabled: 1
     path: Assets/Scenes/Product.unity
     guid: c6a2d3906682e8145948e4858cabb98d
   - enabled: 1

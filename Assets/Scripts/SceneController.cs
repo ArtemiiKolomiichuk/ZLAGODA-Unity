@@ -55,6 +55,7 @@ public class SceneController : MonoBehaviour
                 case "Store_product":
                 case "Bill":
                 case "Customer_card":
+                case "Check_row":
                     return @$"
                     SELECT 
                         * 
@@ -87,6 +88,8 @@ public class SceneController : MonoBehaviour
                     return "check_number";
                 case "Customer_card":
                     return "card_number";
+                case "Check_row":
+                    return "id_row";
                 default:
                     throw new NotImplementedException($"PK name for \"{currentEntity}\"");
             }
@@ -109,6 +112,8 @@ public class SceneController : MonoBehaviour
                 return Bill.CellTypes();
             case "Customer_card":
                 return Customer_card.CellTypes();
+            case "Check_row":
+                return Check_row.CellTypes();
             default:
                 throw new NotImplementedException($"CellTypes for \"{currentEntity}\"");
         }
@@ -124,6 +129,8 @@ public class SceneController : MonoBehaviour
                 return new List<string> { "Product" };
             case "Bill":
                 return new List<string> { "Employee", "Customer_card" };
+            case "Check_row":
+                return new List<string> { "Bill", "Product" };
             default:
                 throw new NotImplementedException($"FKEntities for \"{currentEntity}\"");
         }
@@ -167,6 +174,14 @@ public class SceneController : MonoBehaviour
                     customer_cardFKs.Add(customer_card.ToString());
                 }
                 return customer_cardFKs;
+            case "Bill":
+                var bills = SQLController.Instance.ExecuteQuery<Bill>("SELECT * FROM Bill");
+                List<string> billFKs = new List<string>();
+                foreach (var bill in bills)
+                {
+                    billFKs.Add(bill.ToString());
+                }
+                return billFKs;
             default:
                 throw new NotImplementedException($"FKs for \"{entity}\"");
         }
@@ -234,6 +249,15 @@ public class SceneController : MonoBehaviour
                 }
                 TableFiller.Instance.FillTable(customer_cardsData, Customer_card.CellTypes(), Customer_card.dimensions, null, accessRights);
                 break;
+            case "Check_row":
+                var check_rows = SQLController.Instance.ExecuteQuery<Check_row>(query);
+                List<List<string>> check_rowsData = new List<List<string>>();
+                foreach (var check_row in check_rows)
+                {
+                    check_rowsData.Add(check_row.ToList());
+                }
+                TableFiller.Instance.FillTable(check_rowsData, Check_row.CellTypes(), Check_row.dimensions, new List<List<string>>{GetFKs("Bill"), GetFKs("Product")}, accessRights);
+                break;
             default:
                 throw new NotImplementedException($"Loading the table of \"{currentEntity.ToString()}\"");
         }
@@ -250,6 +274,10 @@ public class SceneController : MonoBehaviour
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
                 TableFiller.Instance.PaintRow(products[0].ToList(), Product.CellTypes(), parent, Product.dimensions, even, new List<List<string>>{GetFKs("Category")}, accessRights);
+                break;
+            case "Check_row":
+                var check_rows = SQLController.Instance.ExecuteQuery<Check_row>(query);
+                TableFiller.Instance.PaintRow(check_rows[0].ToList(), Check_row.CellTypes(), parent, Check_row.dimensions, even, new List<List<string>>{GetFKs("Bill"), GetFKs("Product")}, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Repainting the row of \"{currentEntity.ToString()}\"");
@@ -320,6 +348,15 @@ public class SceneController : MonoBehaviour
                     customer_cardsData.Add(customer_card.ToList());
                 }
                 TableFiller.Instance.FillTable(customer_cardsData, Customer_card.CellTypes(), Customer_card.dimensions, null, accessRights);
+                break;
+            case "Check_row":
+                var check_rows = SQLController.Instance.ExecuteQuery<Check_row>(query);
+                List<List<string>> check_rowsData = new List<List<string>>();
+                foreach (var check_row in check_rows)
+                {
+                    check_rowsData.Add(check_row.ToList());
+                }
+                TableFiller.Instance.FillTable(check_rowsData, Check_row.CellTypes(), Check_row.dimensions, new List<List<string>>{GetFKs("Bill"), GetFKs("Product")}, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Ordering the table of \"{currentEntity.ToString()}\"");

@@ -27,12 +27,19 @@ public class InsertController : MonoBehaviour
     {
         insertButton.onClick.AddListener(TryInsert);
         int index = 0;
-        for(int i = 0; i < inputs.Length; i++)
+        if(SceneController.Instance.currentEntity == "Check_row")
         {
-            if(SceneController.Instance.CellTypes()[i] == CellType.FKButton)
+            inputs[2].GetComponent<InputFK>().Init(SceneController.Instance.GetFKs(SceneController.Instance.FKEntities()[1]));
+        }
+        else
+        {
+            for(int i = 0; i < inputs.Length; i++)
             {
-                inputs[i].GetComponent<InputFK>().Init(SceneController.Instance.GetFKs(SceneController.Instance.FKEntities()[index]));
-                index++;
+                if(SceneController.Instance.CellTypes()[i] == CellType.FKButton)
+                {
+                    inputs[i].GetComponent<InputFK>().Init(SceneController.Instance.GetFKs(SceneController.Instance.FKEntities()[index]));
+                    index++;
+                }
             }
         }
         if(OnInsertButton.Instance != null)
@@ -49,34 +56,38 @@ public class InsertController : MonoBehaviour
     {
         var values = new List<string>();
         var types = SceneController.Instance.CellTypes();
-        for (int i = 0; i < inputs.Length; i++)
+        try
         {
-            if(types[i] == CellType.FKButton)
+            for (int i = 0; i < inputs.Length; i++)
             {
-                values.Add(inputs[i].GetComponent<InputFK>().GetPK());
-                continue;
-            }
-            if(types[i] == CellType.InputField)
-            {
-                if(inputs[i].GetComponent<TMPro.TMP_InputField>().text.Length == 0)
+                if(types[i] == CellType.FKButton)
                 {
-                    values.Add("NULL");
+                    values.Add(inputs[i].GetComponent<InputFK>().GetPK());
                     continue;
                 }
-                if(inputs[i].GetComponent<TMPro.TMP_InputField>().contentType == TMPro.TMP_InputField.ContentType.DecimalNumber)
+                if(types[i] == CellType.InputField)
                 {
-                    values.Add(inputs[i].GetComponent<TMPro.TMP_InputField>().text.Replace(',', '.'));
+                    if(inputs[i].GetComponent<TMPro.TMP_InputField>().text.Length == 0)
+                    {
+                        values.Add("NULL");
+                        continue;
+                    }
+                    if(inputs[i].GetComponent<TMPro.TMP_InputField>().contentType == TMPro.TMP_InputField.ContentType.DecimalNumber)
+                    {
+                        values.Add(inputs[i].GetComponent<TMPro.TMP_InputField>().text.Replace(',', '.'));
+                        continue;
+                    }
+                    values.Add($"\'{inputs[i].GetComponent<TMPro.TMP_InputField>().text}\'");
                     continue;
                 }
-                values.Add($"\'{inputs[i].GetComponent<TMPro.TMP_InputField>().text}\'");
-                continue;
-            }
-            if(types[i] == CellType.Toggle)
-            {
-                values.Add(inputs[i].GetComponent<Toggle>().isOn ? "1" : "0");
-                continue;
+                if(types[i] == CellType.Toggle)
+                {
+                    values.Add(inputs[i].GetComponent<Toggle>().isOn ? "1" : "0");
+                    continue;
+                }
             }
         }
+        catch{}
         if(SceneController.Instance.currentEntity == "Product")
         {
             values.Add("0");
@@ -90,21 +101,33 @@ public class InsertController : MonoBehaviour
             "0", PersistentData.chosenDate,
             "0","0"};
         }
+        if(SceneController.Instance.currentEntity == "Check_row")
+        {
+            values = new List<string>() { inputs[0].GetComponent<TMPro.TMP_InputField>().text, 
+            inputs[1].GetComponent<TMPro.TMP_InputField>().text,
+            "0",
+            PersistentData.additionalData,
+            inputs[2].GetComponent<InputFK>().GetPK(),
+            "0"
+            };
+        }
         if (SceneController.Instance.TryAddRow(values))
         {
-            for (int i = 0; i < inputs.Length; i++)
-            {
-                if (SceneController.Instance.CellTypes()[i] == CellType.InputField)
+            try{
+                for (int i = 0; i < inputs.Length; i++)
                 {
-                    inputs[i].GetComponent<TMPro.TMP_InputField>().text = "";
-                    continue;
+                    if (SceneController.Instance.CellTypes()[i] == CellType.InputField)
+                    {
+                        inputs[i].GetComponent<TMPro.TMP_InputField>().text = "";
+                        continue;
+                    }
+                    if (SceneController.Instance.CellTypes()[i] == CellType.Toggle)
+                    {
+                        inputs[i].GetComponent<Toggle>().isOn = false;
+                        continue;
+                    }
                 }
-                if (SceneController.Instance.CellTypes()[i] == CellType.Toggle)
-                {
-                    inputs[i].GetComponent<Toggle>().isOn = false;
-                    continue;
-                }
-            }
+            }catch{}
             Hide();
             TableFiller.Instance.DeleteAllChildren();
             SceneController.Instance.Load();

@@ -40,7 +40,7 @@ public abstract class InputField : MonoBehaviour
                 if(!TryUpdate(newText))
                 {
                     inputField.text = oldText;
-                    Debug.LogWarning($"{new FormatException().GetType()}: '{newText}' is not a valid value for '{attribute}'");
+                    ExceptionHandler.Instance.ShowException(new FormatException(), $"'{newText}' is not a valid value for '{attribute}'");
                 }
                 else
                 {

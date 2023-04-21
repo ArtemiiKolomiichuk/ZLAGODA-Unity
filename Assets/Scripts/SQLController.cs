@@ -37,7 +37,7 @@ public class SQLController : MonoBehaviour
         }
         catch (SQLiteException e)
         {
-            Debug.LogWarning($"{e.GetType()}: {e.Message}");
+            ExceptionHandler.Instance.ShowException(e, e.Message);
             return false;
         }
     }

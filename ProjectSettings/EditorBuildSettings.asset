@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Bill.unity
     guid: 5da2edd58ac80b243939042ed0bc6b20
   - enabled: 1
+    path: Assets/Scenes/Customer_card.unity
+    guid: d6ef8a47ed00c7f44a3ebd08f127c763
+  - enabled: 1
     path: Assets/Scenes/Store_product.unity
     guid: ebf8f19df03bbf14896092e29efa167d
   m_configObjects: {}

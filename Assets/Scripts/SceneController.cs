@@ -54,6 +54,7 @@ public class SceneController : MonoBehaviour
                 case "Employee":
                 case "Store_product":
                 case "Bill":
+                case "Customer_card":
                     return @$"
                     SELECT 
                         * 
@@ -84,6 +85,8 @@ public class SceneController : MonoBehaviour
                     return "id_store_product";
                 case "Bill":
                     return "check_number";
+                case "Customer_card":
+                    return "card_number";
                 default:
                     throw new NotImplementedException($"PK name for \"{currentEntity}\"");
             }
@@ -104,6 +107,8 @@ public class SceneController : MonoBehaviour
                 return Store_product.CellTypes();
             case "Bill":
                 return Bill.CellTypes();
+            case "Customer_card":
+                return Customer_card.CellTypes();
             default:
                 throw new NotImplementedException($"CellTypes for \"{currentEntity}\"");
         }
@@ -220,6 +225,15 @@ public class SceneController : MonoBehaviour
                 }
                 TableFiller.Instance.FillTable(billsData, Bill.CellTypes(), Bill.dimensions, new List<List<string>>{GetFKs("Employee"), GetFKs("Customer_card")}, accessRights);
                 break;
+            case "Customer_card":
+                var customer_cards = SQLController.Instance.ExecuteQuery<Customer_card>(query);
+                List<List<string>> customer_cardsData = new List<List<string>>();
+                foreach (var customer_card in customer_cards)
+                {
+                    customer_cardsData.Add(customer_card.ToList());
+                }
+                TableFiller.Instance.FillTable(customer_cardsData, Customer_card.CellTypes(), Customer_card.dimensions, null, accessRights);
+                break;
             default:
                 throw new NotImplementedException($"Loading the table of \"{currentEntity.ToString()}\"");
         }
@@ -297,6 +311,15 @@ public class SceneController : MonoBehaviour
                     billsData.Add(bill.ToList());
                 }
                 TableFiller.Instance.FillTable(billsData, Bill.CellTypes(), Bill.dimensions, new List<List<string>>{GetFKs("Employee"), GetFKs("Customer_card")}, accessRights);
+                break;
+            case "Customer_card":
+                var customer_cards = SQLController.Instance.ExecuteQuery<Customer_card>(query);
+                List<List<string>> customer_cardsData = new List<List<string>>();
+                foreach (var customer_card in customer_cards)
+                {
+                    customer_cardsData.Add(customer_card.ToList());
+                }
+                TableFiller.Instance.FillTable(customer_cardsData, Customer_card.CellTypes(), Customer_card.dimensions, null, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Ordering the table of \"{currentEntity.ToString()}\"");

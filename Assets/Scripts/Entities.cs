@@ -165,7 +165,7 @@ namespace Entities
 
         public override string ToString()
         {
-            return $"Product: \n\aid_product: {id_product}, \n\aproduct_name: {product_name}, \n\amanufacturer: {manufacturer}, \n\acharacteristics: {charachteristics}, \n\acategory_number: {category_number}, \n\adiscounted: {discounted}, \n\abase_price: {base_price}, \n\areal_price: {real_price}";
+            return $"{id_product}: {product_name}";
         }
         public override List<string> ToList()
         {
@@ -195,7 +195,7 @@ namespace Entities
         }
         public static new List<CellType> CellTypes()
         {
-            return new List<CellType> { CellType.InputField, CellType.FKButton, CellType.InputField, CellType.InputField };
+            return new List<CellType> { CellType.InputField, CellType.FKButton, CellType.InputField, CellType.Date };
         }
     }
 

@@ -52,6 +52,7 @@ public class SceneController : MonoBehaviour
                 case "Category":
                 case "Product":
                 case "Employee":
+                case "Store_product":
                     return @$"
                     SELECT 
                         * 
@@ -78,6 +79,8 @@ public class SceneController : MonoBehaviour
                     return "id_product";
                 case "Employee":
                     return "id_employee";
+                case "Store_product":
+                    return "id_store_product";
                 default:
                     throw new NotImplementedException($"PK name for \"{currentEntity}\"");
             }
@@ -94,6 +97,8 @@ public class SceneController : MonoBehaviour
                 return Product.CellTypes();
             case "Employee":
                 return Employee.CellTypes();
+            case "Store_product":
+                return Store_product.CellTypes();
             default:
                 throw new NotImplementedException($"CellTypes for \"{currentEntity}\"");
         }
@@ -105,6 +110,8 @@ public class SceneController : MonoBehaviour
         {
             case "Product":
                 return new List<string> { "Category" }; 
+            case "Store_product":
+                return new List<string> { "Product" };
             default:
                 throw new NotImplementedException($"FKEntities for \"{currentEntity}\"");
         }
@@ -124,6 +131,14 @@ public class SceneController : MonoBehaviour
                 return categoryFKs;
             case "Role":
                 return new List<string> {"1:Manager", "2:Seller"};
+            case "Product":
+                var products = SQLController.Instance.ExecuteQuery<Product>("SELECT * FROM Product");
+                List<string> productFKs = new List<string>();
+                foreach (var product in products)
+                {
+                    productFKs.Add(product.ToString());
+                }
+                return productFKs;
             default:
                 throw new NotImplementedException($"FKs for \"{entity}\"");
         }
@@ -163,6 +178,15 @@ public class SceneController : MonoBehaviour
                     employeesData.Add(employee.ToList());
                 }
                 TableFiller.Instance.FillTable(employeesData, Employee.CellTypes(), Employee.dimensions, new List<List<string>>{GetFKs("Role")}, accessRights);
+                break;
+            case "Store_product":
+                var store_products = SQLController.Instance.ExecuteQuery<Store_product>(query);
+                List<List<string>> store_productsData = new List<List<string>>();
+                foreach (var store_product in store_products)
+                {
+                    store_productsData.Add(store_product.ToList());
+                }
+                TableFiller.Instance.FillTable(store_productsData, Store_product.CellTypes(), Store_product.dimensions, new List<List<string>>{GetFKs("Product")}, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Loading the table of \"{currentEntity.ToString()}\"");
@@ -223,6 +247,15 @@ public class SceneController : MonoBehaviour
                     employeesData.Add(employee.ToList());
                 }
                 TableFiller.Instance.FillTable(employeesData, Employee.CellTypes(), Employee.dimensions, new List<List<string>>{GetFKs("Role")}, accessRights);
+                break;
+            case "Store_product":
+                var store_products = SQLController.Instance.ExecuteQuery<Store_product>(query);
+                List<List<string>> store_productsData = new List<List<string>>();
+                foreach (var store_product in store_products)
+                {
+                    store_productsData.Add(store_product.ToList());
+                }
+                TableFiller.Instance.FillTable(store_productsData, Store_product.CellTypes(), Store_product.dimensions, new List<List<string>>{GetFKs("Product")}, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Ordering the table of \"{currentEntity.ToString()}\"");

@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Employee.unity
     guid: 716293e2cf8753b4ea35dc2daf0cd979
+  - enabled: 1
+    path: Assets/Scenes/Store_product.unity
+    guid: ebf8f19df03bbf14896092e29efa167d
   m_configObjects: {}

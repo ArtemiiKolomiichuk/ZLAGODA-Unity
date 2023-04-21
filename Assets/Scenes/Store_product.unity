@@ -1611,7 +1611,9 @@ MonoBehaviour:
   AutomaticallyAddColumns: 1
   AutomaticallyRemoveEmptyColumns: 1
   ColumnWidths:
-  - 0
+  - 300
+  - 300
+  - 200
   - 0
   UseGlobalCellPadding: 1
   CellPadding:

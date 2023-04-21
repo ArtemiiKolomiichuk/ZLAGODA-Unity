@@ -22,6 +22,10 @@ public class MenuController : MonoBehaviour
                 SceneController.Instance.currentEntity = "Store_product";
                 SceneManager.LoadScene("Store_product");
                 break;
+            case "1.Bill":
+                SceneController.Instance.currentEntity = "Bill";
+                SceneManager.LoadScene("Bill");
+                break;
             case "15.":
                 SceneController.Instance.currentEntity = "Product";
                 SceneController.Instance.whereHaving = 

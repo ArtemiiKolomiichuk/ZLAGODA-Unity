@@ -53,6 +53,7 @@ public class SceneController : MonoBehaviour
                 case "Product":
                 case "Employee":
                 case "Store_product":
+                case "Bill":
                     return @$"
                     SELECT 
                         * 
@@ -81,6 +82,8 @@ public class SceneController : MonoBehaviour
                     return "id_employee";
                 case "Store_product":
                     return "id_store_product";
+                case "Bill":
+                    return "check_number";
                 default:
                     throw new NotImplementedException($"PK name for \"{currentEntity}\"");
             }
@@ -99,6 +102,8 @@ public class SceneController : MonoBehaviour
                 return Employee.CellTypes();
             case "Store_product":
                 return Store_product.CellTypes();
+            case "Bill":
+                return Bill.CellTypes();
             default:
                 throw new NotImplementedException($"CellTypes for \"{currentEntity}\"");
         }
@@ -112,6 +117,8 @@ public class SceneController : MonoBehaviour
                 return new List<string> { "Category" }; 
             case "Store_product":
                 return new List<string> { "Product" };
+            case "Bill":
+                return new List<string> { "Employee", "Customer_card" };
             default:
                 throw new NotImplementedException($"FKEntities for \"{currentEntity}\"");
         }
@@ -139,6 +146,22 @@ public class SceneController : MonoBehaviour
                     productFKs.Add(product.ToString());
                 }
                 return productFKs;
+            case "Employee":
+                var employees = SQLController.Instance.ExecuteQuery<Employee>("SELECT * FROM Employee");
+                List<string> employeeFKs = new List<string>();
+                foreach (var employee in employees)
+                {
+                    employeeFKs.Add(employee.ToString());
+                }
+                return employeeFKs;
+            case "Customer_card":
+                var customer_cards = SQLController.Instance.ExecuteQuery<Customer_card>("SELECT * FROM Customer_card");
+                List<string> customer_cardFKs = new List<string>();
+                foreach (var customer_card in customer_cards)
+                {
+                    customer_cardFKs.Add(customer_card.ToString());
+                }
+                return customer_cardFKs;
             default:
                 throw new NotImplementedException($"FKs for \"{entity}\"");
         }
@@ -187,6 +210,15 @@ public class SceneController : MonoBehaviour
                     store_productsData.Add(store_product.ToList());
                 }
                 TableFiller.Instance.FillTable(store_productsData, Store_product.CellTypes(), Store_product.dimensions, new List<List<string>>{GetFKs("Product")}, accessRights);
+                break;
+            case "Bill":
+                var bills = SQLController.Instance.ExecuteQuery<Bill>(query);
+                List<List<string>> billsData = new List<List<string>>();
+                foreach (var bill in bills)
+                {
+                    billsData.Add(bill.ToList());
+                }
+                TableFiller.Instance.FillTable(billsData, Bill.CellTypes(), Bill.dimensions, new List<List<string>>{GetFKs("Employee"), GetFKs("Customer_card")}, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Loading the table of \"{currentEntity.ToString()}\"");
@@ -256,6 +288,15 @@ public class SceneController : MonoBehaviour
                     store_productsData.Add(store_product.ToList());
                 }
                 TableFiller.Instance.FillTable(store_productsData, Store_product.CellTypes(), Store_product.dimensions, new List<List<string>>{GetFKs("Product")}, accessRights);
+                break;
+            case "Bill":
+                var bills = SQLController.Instance.ExecuteQuery<Bill>(query);
+                List<List<string>> billsData = new List<List<string>>();
+                foreach (var bill in bills)
+                {
+                    billsData.Add(bill.ToList());
+                }
+                TableFiller.Instance.FillTable(billsData, Bill.CellTypes(), Bill.dimensions, new List<List<string>>{GetFKs("Employee"), GetFKs("Customer_card")}, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Ordering the table of \"{currentEntity.ToString()}\"");

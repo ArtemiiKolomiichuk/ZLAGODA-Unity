@@ -41,7 +41,7 @@ namespace Entities
         }
         public static new List<CellType> CellTypes()
         {
-            return new List<CellType> { CellType.InputField, CellType.FKButton, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField };
+            return new List<CellType> { CellType.InputField, CellType.FKButton, CellType.FKButton, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField };
         }
     }
 
@@ -105,7 +105,7 @@ namespace Entities
 
         public override string ToString()
         {
-            return $"Customer_card: \n\acard_number: {card_number}, \n\aname: {name}, \n\alast_name: {last_name}, \n\apatronymic: {patronymic}, \n\aphone_number: {phone_number}, \n\acity: {city}, \n\astreet: {street}, \n\aindex: {index}, \n\apercent: {percent}";
+            return $"{card_number}: {name} {last_name} {patronymic}";
         }
 
         public override List<string> ToList()
@@ -136,7 +136,7 @@ namespace Entities
 
         public override string ToString()
         {
-            return $"Employee: \n\aid_employee: {id_employee}, \n\aname: {name}, \n\alast_name: {last_name}, \n\apatronymic: {patronymic}, \n\arole: {role}, \n\asalary: {salary}, \n\adate_of_start: {date_of_start}, \n\adate_of_birth: {date_of_birth}, \n\aphone_number: {phone_number}, \n\acity: {city}, \n\astreet: {street}, \n\aindex: {index}";
+            return $"{id_employee}: {name} {last_name} {patronymic} ({role})";
         }
 
         public override List<string> ToList()

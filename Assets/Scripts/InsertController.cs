@@ -81,6 +81,15 @@ public class InsertController : MonoBehaviour
         {
             values.Add("0");
         }
+
+        if(SceneController.Instance.currentEntity == "Bill")
+        {
+            values = new List<string>() { inputs[0].GetComponent<TMPro.TMP_InputField>().text, 
+            inputs[1].GetComponent<InputFK>().GetPK(),
+            inputs[2].GetComponent<InputFK>().GetPK(),
+            "0", PersistentData.chosenDate,
+            "0","0"};
+        }
         if (SceneController.Instance.TryAddRow(values))
         {
             for (int i = 0; i < inputs.Length; i++)

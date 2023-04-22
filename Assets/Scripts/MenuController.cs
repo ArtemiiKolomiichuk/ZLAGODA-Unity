@@ -46,9 +46,11 @@ public class MenuController : MonoBehaviour
                 "WHERE discounted = 0";
                 SceneManager.LoadScene("Product");
                 break;
-            case "Print":
-                SceneManager.LoadScene("Print");                
-                break;
+            case "19.20.":
+            case "21.":
+            case "9.10.":
+            case "15.Seller":
+            case "7.":
             default:
                 throw new System.NotImplementedException($"LoadScene for \"{code}\"");
         }

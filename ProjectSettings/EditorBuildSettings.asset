@@ -9,29 +9,32 @@ EditorBuildSettings:
     path: Assets/Scenes/Authentication.unity
     guid: 24ada140f32dd6a47a37baa973defdf4
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
-    guid: 464ca1c42c2b31e4a80eb5202cae8dd0
-  - enabled: 1
-    path: Assets/Scenes/Check_row.unity
-    guid: cc8a2a519a51ae049a373644325178c2
-  - enabled: 1
-    path: Assets/Scenes/Product.unity
-    guid: c6a2d3906682e8145948e4858cabb98d
+    path: Assets/Scenes/Bill.unity
+    guid: 5da2edd58ac80b243939042ed0bc6b20
   - enabled: 1
     path: Assets/Scenes/Category.unity
     guid: 3773c773c2a0f944798f16d3e30e21e8
   - enabled: 1
-    path: Assets/Scenes/Print.unity
-    guid: 0228d8ad9df35284280c6a2db6892540
+    path: Assets/Scenes/Check_row.unity
+    guid: cc8a2a519a51ae049a373644325178c2
+  - enabled: 1
+    path: Assets/Scenes/Customer_card.unity
+    guid: d6ef8a47ed00c7f44a3ebd08f127c763
   - enabled: 1
     path: Assets/Scenes/Employee.unity
     guid: 716293e2cf8753b4ea35dc2daf0cd979
   - enabled: 1
-    path: Assets/Scenes/Bill.unity
-    guid: 5da2edd58ac80b243939042ed0bc6b20
+    path: Assets/Scenes/Menu-Manager.unity
+    guid: 464ca1c42c2b31e4a80eb5202cae8dd0
   - enabled: 1
-    path: Assets/Scenes/Customer_card.unity
-    guid: d6ef8a47ed00c7f44a3ebd08f127c763
+    path: Assets/Scenes/Menu-Seller.unity
+    guid: ffa7fa9ad2969674992125aed205997f
+  - enabled: 1
+    path: Assets/Scenes/Print.unity
+    guid: 0228d8ad9df35284280c6a2db6892540
+  - enabled: 1
+    path: Assets/Scenes/Product.unity
+    guid: c6a2d3906682e8145948e4858cabb98d
   - enabled: 1
     path: Assets/Scenes/Store_product.unity
     guid: ebf8f19df03bbf14896092e29efa167d

@@ -168,6 +168,14 @@ public class SceneController : MonoBehaviour
                     employeeFKs.Add(employee.ToString());
                 }
                 return employeeFKs;
+            case "Seller":
+                var sellers = SQLController.Instance.ExecuteQuery<Employee>("SELECT * FROM Employee WHERE role = 2");
+                List<string> sellerFKs = new List<string>();
+                foreach (var seller in sellers)
+                {
+                    sellerFKs.Add(seller.ToString());
+                }
+                return sellerFKs;
             case "Customer_card":
                 var customer_cards = SQLController.Instance.ExecuteQuery<Customer_card>("SELECT * FROM Customer_card");
                 List<string> customer_cardFKs = new List<string>();

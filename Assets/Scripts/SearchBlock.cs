@@ -12,13 +12,31 @@ public class SearchBlock : MonoBehaviour
     [SerializeField] private Button continueButton;
     [SerializeField] private int query;
 
-    private void Start()
+    private void Awake()
     {
         continueButton.onClick.AddListener(Continue);
         if(query == 0)
         {
             inputs[0].GetComponent<TMP_Dropdown>().ClearOptions();
             inputs[0].GetComponent<TMP_Dropdown>().AddOptions(SceneController.Instance.GetFKs("Role"));
+        }
+        else if(query == 4)
+        {
+            inputs[0].GetComponent<TMP_Dropdown>().ClearOptions();
+            inputs[0].GetComponent<TMP_Dropdown>().AddOptions(SceneController.Instance.GetFKs("Category"));
+        }
+        else if (query == 7)
+        {
+            inputs[0].GetComponent<TMP_Dropdown>().ClearOptions();
+            inputs[0].GetComponent<TMP_Dropdown>().AddOptions(SceneController.Instance.GetFKs("Seller"));
+            inputs[1].GetComponent<DatePicker>().SelectedDate = DateTime.Now;
+            inputs[2].GetComponent<DatePicker>().SelectedDate = DateTime.Now;
+            if(!PersistentData.isManager)
+            {
+                inputs[0].GetComponent<TMP_Dropdown>().ClearOptions();
+                inputs[0].GetComponent<TMP_Dropdown>().AddOptions(new List<string>{PersistentData.userString});
+                inputs[0].GetComponent<TMP_Dropdown>().interactable = false;
+            }
         }
     }
 
@@ -50,7 +68,7 @@ public class SearchBlock : MonoBehaviour
 1    - прізвище
 - Клієнт
 2    - відсоток
-3    - прізвище
+3(1)    - прізвище
 - Товар
 4    - категорія
 ~5   - UPC 
@@ -63,11 +81,11 @@ public class SearchBlock : MonoBehaviour
     {
         0 => $"WHERE role = '{inputs[0]}'",
         1 => $"WHERE last_name LIKE '%{inputs[0]}%'",
-        2 => $"WHERE percent = '%{(decimal.Parse(inputs[0].Replace('.', ',')) > 1 ? (decimal.Parse(inputs[0].Replace('.', ','))/100) : inputs[0])}%'",
-        3 => $"WHERE last_name LIKE '%{inputs[0]}%'",
-        4 => $"WHERE category = '{inputs[0]}'",
+        2 => $"WHERE percent = '{((decimal.Parse(inputs[0].Replace('.', ',')) > 1 ? (decimal.Parse(inputs[0].Replace('.', ','))/100).ToString().Replace(',', '.') : inputs[0].Replace(',', '.')))}'",
+        //3 => $"WHERE last_name LIKE '%{inputs[0]}%'",
+        4 => $"WHERE category_number = '{inputs[0]}'",
         //5 => $"WHERE id LIKE '%{inputs[0]}%'",
-        6 => $"WHERE name LIKE '%{inputs[0]}%'",
+        6 => $"WHERE product_name LIKE '%{inputs[0]}%'",
         7 => $"WHERE id_employee = '{inputs[0]}' AND print_date BETWEEN '{inputs[1]}' AND '{inputs[2]}'",
         8 => $"WHERE check_number LIKE '%{inputs[0]}%'",
         _ => throw new System.NotImplementedException($"GetWhereHaving {index} not implemented")

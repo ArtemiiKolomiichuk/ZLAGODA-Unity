@@ -136,7 +136,7 @@ namespace Entities
 
         public override string ToString()
         {
-            return $"{id_employee}: {name} {last_name} {patronymic} ({role})";
+            return $"{id_employee}: {name} {last_name} {patronymic}";
         }
 
         public override List<string> ToList()

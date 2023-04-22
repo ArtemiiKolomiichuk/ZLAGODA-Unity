@@ -52,4 +52,12 @@ public class ExceptionHandler : MonoBehaviour
         this.title.text = e.GetType().ToString();
         description.text = message;
     }
+
+    public void ShowMessage(string header, string message)
+    {
+        canvas.enabled = true;
+        imageBack.SetActive(true);
+        this.title.text = header;
+        description.text = message;
+    }
 }

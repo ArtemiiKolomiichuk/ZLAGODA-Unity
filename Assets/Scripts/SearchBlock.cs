@@ -15,6 +15,11 @@ public class SearchBlock : MonoBehaviour
     private void Start()
     {
         continueButton.onClick.AddListener(Continue);
+        if(query == 0)
+        {
+            inputs[0].GetComponent<TMP_Dropdown>().ClearOptions();
+            inputs[0].GetComponent<TMP_Dropdown>().AddOptions(SceneController.Instance.GetFKs("Role"));
+        }
     }
 
     private void Continue()
@@ -22,32 +27,33 @@ public class SearchBlock : MonoBehaviour
         string[] inputValues = new string[inputs.Length];
         for (int i = 0; i < inputs.Length; i++)
         {
-            if(inputs[i].GetComponent<InputField>() != null)
+            if(inputs[i].GetComponent<TMP_InputField>() != null)
             {
                 inputValues[i] = inputs[i].GetComponent<TMP_InputField>().text;
             }
-            else if(inputs[i].GetComponent<Dropdown>() != null)
+            else if(inputs[i].GetComponent<TMP_Dropdown>() != null)
             {
-                inputValues[i] = inputs[i].GetComponent<Dropdown>().options[inputs[i].GetComponent<Dropdown>().value].text;
+                inputValues[i] = inputs[i].GetComponent<TMP_Dropdown>().options[inputs[i].GetComponent<TMP_Dropdown>().value].text.Substring(0, inputs[i].GetComponent<TMP_Dropdown>().options[inputs[i].GetComponent<TMP_Dropdown>().value].text.IndexOf(":"));
             }
             else if(inputs[i].GetComponent<DatePicker>() != null)
             {
-                inputValues[i] = inputs[i].transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_InputField>().text;
+                inputValues[i] = inputs[i].transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_InputField>().text;
             }
         }
+        Debug.Log(GetWhereHaving(query, inputValues));
         SearchController.Instance.SetWhereHaving(GetWhereHaving(query, inputValues));
     }
 
     /*
 - Працівник
-0    - FKпосада
+0    - посада
 1    - прізвище
 - Клієнт
 2    - відсоток
 3    - прізвище
 - Товар
 4    - категорія
-~5    - UPC 
+~5   - UPC 
 6    - назва
 - Чек
 7    - Касир + період
@@ -56,9 +62,9 @@ public class SearchBlock : MonoBehaviour
     private string GetWhereHaving(int index, string[] inputs) => index switch
     {
         0 => $"WHERE role = '{inputs[0]}'",
-        1 => $"WHERE surname LIKE '%{inputs[0]}%'",
+        1 => $"WHERE last_name LIKE '%{inputs[0]}%'",
         2 => $"WHERE percent = '%{(decimal.Parse(inputs[0].Replace('.', ',')) > 1 ? (decimal.Parse(inputs[0].Replace('.', ','))/100) : inputs[0])}%'",
-        3 => $"WHERE surname LIKE '%{inputs[0]}%'",
+        3 => $"WHERE last_name LIKE '%{inputs[0]}%'",
         4 => $"WHERE category = '{inputs[0]}'",
         //5 => $"WHERE id LIKE '%{inputs[0]}%'",
         6 => $"WHERE name LIKE '%{inputs[0]}%'",

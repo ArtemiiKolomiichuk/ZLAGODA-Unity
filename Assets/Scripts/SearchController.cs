@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class SearchController : MonoBehaviour
 {
     public static SearchController Instance { get; private set; }
-    [SerializeField] private Canvas canvas;
-    [SerializeField] private Button searchButton;
-    [SerializeField] private Button clearButton;
     private string oldWhereHaving = "";
 
     private void Awake()
@@ -23,16 +20,36 @@ public class SearchController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Hide();
+    }
+
     public void SetWhereHaving(string whereHaving)
     {
         oldWhereHaving = SceneController.Instance.whereHaving;
         SceneController.Instance.whereHaving = whereHaving;
+        SceneController.Instance.ReloadOrdered(SceneController.Instance.pkName, false);
+        Hide();
     }
 
     public void ClearWhereHaving()
     {
-        SceneController.Instance.whereHaving = oldWhereHaving;
+        SceneController.Instance.whereHaving = "";
         oldWhereHaving = "";
+        SceneController.Instance.ReloadOrdered(SceneController.Instance.pkName, false);
+    }
+
+    public void Show()
+    {
+        GetComponent<Canvas>().enabled = true;
+        transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        GetComponent<Canvas>().enabled = false;
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuController : MonoBehaviour
 {
+    private bool manager => AccessController.isManager;
     public void LoadScene(string code)
     {
         switch (code)

@@ -11,6 +11,13 @@ public class BackButton : MonoBehaviour
 
     public void GoBack()
     {
-        SceneManager.LoadScene("Menu");
+        if(AccessController.isManager)
+        {
+            SceneManager.LoadScene("Menu-Manager");
+        }
+        else
+        {
+            SceneManager.LoadScene("Menu-Seller");
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entities;
+using UI.Dates;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,6 +40,10 @@ public class InsertController : MonoBehaviour
                 {
                     inputs[i].GetComponent<InputFK>().Init(SceneController.Instance.GetFKs(SceneController.Instance.FKEntities()[index]));
                     index++;
+                }
+                if(SceneController.Instance.CellTypes()[i] == CellType.Date)
+                {
+                    inputs[i].GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now);
                 }
             }
         }
@@ -83,6 +88,11 @@ public class InsertController : MonoBehaviour
                 if(types[i] == CellType.Toggle)
                 {
                     values.Add(inputs[i].GetComponent<Toggle>().isOn ? "1" : "0");
+                    continue;
+                }
+                if(types[i] == CellType.Date)
+                {
+                    values.Add($"\'{inputs[i].transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_InputField>().text}\'");
                     continue;
                 }
             }

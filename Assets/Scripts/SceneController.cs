@@ -131,6 +131,8 @@ public class SceneController : MonoBehaviour
                 return new List<string> { "Employee", "Customer_card" };
             case "Check_row":
                 return new List<string> { "Bill", "Product" };
+            case "Employee":
+                return new List<string> { "Role" };
             default:
                 throw new NotImplementedException($"FKEntities for \"{currentEntity}\"");
         }

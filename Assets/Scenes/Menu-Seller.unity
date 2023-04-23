@@ -923,8 +923,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0427\u0435\u043A\u0438 \u0437\u0430 \u043F\u0435\u0432\u043D\u0438\u0439
-    \u043F\u0435\u0440\u0456\u043E\u0434\n"
+  m_text: "\u0427\u0435\u043A\u0438\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d4ea89748f1e3c4a812c10304079331, type: 2}
   m_sharedMaterial: {fileID: 5331125473342528620, guid: 3d4ea89748f1e3c4a812c10304079331, type: 2}
@@ -2291,7 +2290,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 9.10.
+          m_StringArgument: 1.Bill
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &798464360

@@ -220,4 +220,19 @@ namespace Entities
             return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField };
         }
     }
+
+    /// <summary>
+    /// Universal class for queries 14,19,20,21
+    /// </summary>
+    public class Report 
+    {
+        public decimal total_revenue { get; set; }
+        public decimal total_amount { get; set; }
+
+
+        public decimal price { get; set; }
+        public decimal amount { get; set; }
+        public string product_name { get; set; }
+        public string charachteristics { get; set; }
+    }
 }

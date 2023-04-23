@@ -118,6 +118,12 @@ public class MenuController : MonoBehaviour
             }
             //21
             {
+                var table = canvases[2].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+                dropdown = table.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>();
+                dropdown.ClearOptions();
+                dropdown.AddOptions(SceneController.Instance.GetFKs("Product"));
+                table.GetChild(1).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
+                table.GetChild(2).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
             }
         }
         HideAll();
@@ -193,7 +199,24 @@ public class MenuController : MonoBehaviour
                 $"Загальний дохід: {reports19[0].total_revenue} грн.\nЗагальна кількість проданих товарів: {reports19[0].total_amount} шт.\n";
                 break;
             case 2:
-                //20
+                var table2 = canvases[2].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+                int idProduct = int.Parse(table2.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>().options[table2.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>().value].text.Substring(0, table2.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>().options[table2.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>().value].text.IndexOf(":")));
+                DateTime from2 = table2.GetChild(1).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate;
+                DateTime to2 = table2.GetChild(2).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate;
+                var reports21 = SQLController.Instance.ExecuteQuery<Entities.Report>(
+                    $@"
+                    SELECT 
+                        SUM(row_amount) as total_amount
+                    FROM 
+                        Check_row cr
+                        INNER JOIN Bill b ON cr.check_number = b.check_number
+                    WHERE 
+                        cr.id_product = '{idProduct}'
+                    AND 
+                        b.print_date BETWEEN '{from2.ToString()}' AND '{to2.ToString()}';
+                    ");
+                canvases[2].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
+                $"Загальна кількість проданих товарів: {reports21[0].total_amount} шт.";
                 break;
             default:
                 throw new System.NotImplementedException($"Process for \"{index}\"");

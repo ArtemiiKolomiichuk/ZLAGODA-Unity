@@ -60,7 +60,12 @@ public class PrintingController : MonoBehaviour
     private List<float> GetColumnWidths() => PersistentData.table switch
     {
         "Product" => new List<float> { 400,400,600,400,300,200,330,330 },
-        _ => throw new NotImplementedException($"Not implemented for {PersistentData.table}")
+        "Category" => new List<float> { 540, 1350 },
+        "Bill" => new List<float> { 400,400,670,230,310,500,450 },
+        "Customer_card" => new List<float> { 320,350,350,350,500,270,425,225,210 },
+        "Store_product" => new List<float> { 420,1100,300,800 },
+        "Employee" => new List<float> { 150,250,250,250,200,250,250,250,350,200,350,200},
+        _ => new List<float> { 0 }
     };
 
     private void ShowPage(int index)

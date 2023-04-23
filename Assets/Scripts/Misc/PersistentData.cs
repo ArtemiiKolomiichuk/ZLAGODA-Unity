@@ -12,4 +12,7 @@ public class PersistentData : MonoBehaviour
     public static bool isManager => AccessController.isManager;
     public static int userId = 1;
     public static string userString = "1: replace!";
+    public static GameObject tableHeader;
+    public static GameObject tableContent;
+    public static string table;
 }

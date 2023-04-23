@@ -11,6 +11,14 @@ public class BackButton : MonoBehaviour
 
     public void GoBack()
     {
+        if(PersistentData.tableHeader != null)
+        {
+            Destroy(PersistentData.tableHeader);
+        }
+        if(PersistentData.tableContent != null)
+        {
+            Destroy(PersistentData.tableContent);
+        }
         if(AccessController.isManager)
         {
             SceneManager.LoadScene("Menu-Manager");

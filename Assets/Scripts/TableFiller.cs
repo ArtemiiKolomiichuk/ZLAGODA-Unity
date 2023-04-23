@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Entities;
 using System;
 using static AccessController;
+using UnityEngine.SceneManagement;
 
 public class TableFiller : MonoBehaviour
 {
@@ -51,6 +52,16 @@ public class TableFiller : MonoBehaviour
         if(accessRights == AccessRights.Edit)
         {
             var addRow = Instantiate(addRowButton, table.transform);
+        }
+        if(!PersistentData.isManager)
+        {
+            if(GameObject.Find("PrintButton") != null)
+                Destroy(GameObject.Find("PrintButton"));
+        }
+        else
+        {
+            if(GameObject.Find("PrintButton") != null)
+                GameObject.Find("PrintButton").GetComponent<Button>().onClick.AddListener(() => SceneController.OnPrint());
         }
         layout.sizeDelta = new Vector2(layout.sizeDelta.x, (data.Count + (accessRights == AccessRights.Edit ? 1 : 0)) * 63.38f);
         var posY = layout.sizeDelta.y <= 532f ? -268 : -layout.sizeDelta.y / 2;

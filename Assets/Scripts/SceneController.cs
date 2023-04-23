@@ -24,6 +24,7 @@ public class SceneController : MonoBehaviour
             {
                 if (scene.name != "Menu-Manager" && scene.name != "Menu-Seller" && scene.name != "Print" && scene.name != "Authentication")
                 {
+                    
                     Load();
                 }
                 else
@@ -403,5 +404,22 @@ public class SceneController : MonoBehaviour
         VALUES
             ({string.Join(", ", values)});";
         return SQLController.Instance.TryExecuteNonQuery(query);
+    }
+
+    internal static void OnPrint()
+    {
+        SceneController.Instance.OnPrint2();
+    }
+
+    private void OnPrint2()
+    {
+        PersistentData.tableHeader = GameObject.Find("Header");
+        PersistentData.tableContent = GameObject.Find("TableToPrint");
+        PersistentData.tableHeader.transform.SetParent(null);
+        PersistentData.tableContent.transform.SetParent(null);
+        DontDestroyOnLoad(PersistentData.tableHeader);
+        DontDestroyOnLoad(PersistentData.tableContent);
+        PersistentData.table = SceneController.Instance.currentEntity;
+        SceneManager.LoadScene("Print");
     }
 }

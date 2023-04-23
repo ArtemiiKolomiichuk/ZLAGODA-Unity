@@ -43,7 +43,7 @@ public class InsertController : MonoBehaviour
                 }
                 if(SceneController.Instance.CellTypes()[i] == CellType.Date)
                 {
-                    inputs[i].GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now);
+                    inputs[i].GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
                 }
             }
         }

@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using static AccessController.AccessRights;
+using UI.Dates;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
@@ -104,9 +106,19 @@ public class MenuController : MonoBehaviour
         var dropdown = canvases[0].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>();
         dropdown.ClearOptions();
         dropdown.AddOptions(SceneController.Instance.GetFKs("Product"));
-        if(manager)
+        if(true)//manager
         {
-            //init 19-20,21
+            {
+                var table = canvases[1].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+                dropdown = table.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>();
+                dropdown.ClearOptions();
+                dropdown.AddOptions(SceneController.Instance.GetFKs("Seller"));
+                table.GetChild(2).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
+                table.GetChild(3).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
+            }
+            //21
+            {
+            }
         }
         HideAll();
     }
@@ -150,6 +162,35 @@ public class MenuController : MonoBehaviour
                 break;
             case 1:
                 //19
+                var table = canvases[1].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+                int idSeller = int.Parse(table.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>().options[table.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>().value].text.Substring(0, table.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>().options[table.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>().value].text.IndexOf(":")));
+                bool allSellers = table.GetChild(1).GetChild(0).GetChild(0).GetComponent<Toggle>().isOn;
+                DateTime from = table.GetChild(2).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate;
+                DateTime to = table.GetChild(3).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate;
+                string where = "id_employee " + (allSellers ? "LIKE \"%%\"" : $"= '{idSeller}'");
+                var reports19 = SQLController.Instance.ExecuteQuery<Entities.Report>(
+                    $@"
+                    SELECT
+                        SUM(b.sum_total) AS total_revenue,
+                        (SELECT SUM(row_amount) 
+                        FROM Check_row cr 
+                        WHERE cr.check_number IN 
+                            (SELECT check_number 
+                            FROM Bill 
+                            WHERE 
+                                {where}
+                            AND 
+                                print_date BETWEEN '{from.ToString()}' AND '{to.ToString()}')
+                        ) AS total_amount
+                    FROM 
+                        Bill b 
+                    WHERE 
+                        b.{where}
+                    AND 
+                        b.print_date BETWEEN '{from.ToString()}' AND '{to.ToString()}';
+                    ");
+                canvases[1].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = 
+                $"Загальний дохід: {reports19[0].total_revenue} грн.\nЗагальна кількість проданих товарів: {reports19[0].total_amount} шт.\n";
                 break;
             case 2:
                 //20

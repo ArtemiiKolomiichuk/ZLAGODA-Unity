@@ -23,6 +23,8 @@ public class AuthenticationController : MonoBehaviour
         //TODO: Screen size
         Screen.SetResolution(1366, 768, FullScreenMode.Windowed);
         //~ExceptionHandler.ShowMessage("No user", "Login is incorrect");
+        AccessController.isManager = true;
+        PersistentData.userId = 1;
         SceneManager.LoadScene("Menu-Manager");
     }
 }

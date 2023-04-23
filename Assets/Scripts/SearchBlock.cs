@@ -29,8 +29,8 @@ public class SearchBlock : MonoBehaviour
         {
             inputs[0].GetComponent<TMP_Dropdown>().ClearOptions();
             inputs[0].GetComponent<TMP_Dropdown>().AddOptions(SceneController.Instance.GetFKs("Seller"));
-            inputs[1].GetComponent<DatePicker>().SelectedDate = DateTime.Now;
-            inputs[2].GetComponent<DatePicker>().SelectedDate = DateTime.Now;
+            inputs[1].GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
+            inputs[2].GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
             if(!PersistentData.isManager)
             {
                 inputs[0].GetComponent<TMP_Dropdown>().ClearOptions();

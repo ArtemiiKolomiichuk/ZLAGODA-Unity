@@ -28,9 +28,8 @@ public class AuthenticationController : MonoBehaviour
     private void Login()
     {
         string login = loginInput.text;
-        string password = passwordInput.text;
-
-
+        string password = InputPassword.Encrypt(passwordInput.text);
+        Console.WriteLine(password);
         var users = SQLController.Instance.ExecuteQuery<Employee>(@$"SELECT * FROM Employee WHERE phone_number='{login}' AND password='{password}'");
 
         List<List<string>> loginsData = new List<List<string>>();

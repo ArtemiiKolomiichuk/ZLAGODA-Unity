@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -8,18 +9,29 @@ public class InputPassword : InputField
     public override bool TryUpdate(string newText)
     {
         return SceneController.Instance.TryUpdateRow(
-            attribute, 
-            Encrypt(newText), 
-            parent.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_InputField>().text);   
+            attribute,
+            Encrypt(newText),
+            parent.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_InputField>().text);
     }
 
-    public static string Encrypt(string s)
+    public static string Encrypt(string s, string salt = "")
     {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.Length; i++)
+        if (String.IsNullOrEmpty(s))
         {
-            sb.Append((char)(s[i] ^ "TyNdeEaWRigo8lYuFyvWEiosrtET4q80"[(i + 3) % 17 + 2]));
+            return String.Empty;
         }
-        return sb.ToString();
+        // Encrypt using SHA256 and salt
+        var sha = new System.Security.Cryptography.SHA256Managed();
+        {
+            // Convert the string to a byte array first, to be processed
+            byte[] textBytes = System.Text.Encoding.UTF8.GetBytes(s + salt);
+            byte[] hashBytes = sha.ComputeHash(textBytes);
+            string hash = BitConverter
+                .ToString(hashBytes)
+                .Replace("-", String.Empty);
+
+            return hash;
+        }
     }
+
 }

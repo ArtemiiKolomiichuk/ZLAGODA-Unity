@@ -64,7 +64,7 @@ public class PrintingController : MonoBehaviour
         "Bill" => new List<float> { 400,400,670,230,310,500,450 },
         "Customer_card" => new List<float> { 320,350,350,350,500,270,425,225,210 },
         "Store_product" => new List<float> { 420,1100,300,800 },
-        "Employee" => new List<float> { 150,250,250,250,200,250,250,250,350,200,350,200},
+        "Employee" => new List<float> { 150,250,250,250,200,250,250,250,350,200,350,220},
         _ => new List<float> { 0 }
     };
 

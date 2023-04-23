@@ -102,7 +102,7 @@ namespace Entities
         public string phone_number { get; set; }
         public string city { get; set; }
         public string street { get; set; }
-        public int index { get; set; }
+        public int zipcode { get; set; }
         public decimal percent { get; set; }
 
         public override string ToString()
@@ -112,7 +112,7 @@ namespace Entities
 
         public override List<string> ToList()
         {
-            return new List<string> { card_number.ToString(), name, last_name, patronymic, phone_number, city, street, index.ToString(), percent.ToString() };
+            return new List<string> { card_number.ToString(), name, last_name, patronymic, phone_number, city, street, zipcode.ToString(), percent.ToString() };
         }
         public static new List<CellType> CellTypes()
         {
@@ -134,7 +134,7 @@ namespace Entities
         public string phone_number { get; set; }
         public string city { get; set; }
         public string street { get; set; }
-        public int index { get; set; }
+        public int zipcode { get; set; }
         public string password { get; set; }
 
         public override string ToString()
@@ -144,7 +144,7 @@ namespace Entities
 
         public override List<string> ToList()
         {
-            return new List<string> { id_employee.ToString(), name, last_name, patronymic, role, salary.ToString(), date_of_start, date_of_birth, phone_number, city, street, index.ToString(), password };
+            return new List<string> { id_employee.ToString(), name, last_name, patronymic, role, salary.ToString(), date_of_start, date_of_birth, phone_number, city, street, zipcode.ToString(), password };
         }
 
         public static new List<CellType> CellTypes()

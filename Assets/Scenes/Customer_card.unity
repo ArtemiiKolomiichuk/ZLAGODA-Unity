@@ -5668,7 +5668,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8672065433332679070, guid: ede030428b6e5b94381959cf6c10cb19, type: 3}
       propertyPath: attribute
-      value: index
+      value: zipcode
       objectReference: {fileID: 0}
     - target: {fileID: 8985264154613143107, guid: ede030428b6e5b94381959cf6c10cb19, type: 3}
       propertyPath: m_Name

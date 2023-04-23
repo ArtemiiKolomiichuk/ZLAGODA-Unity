@@ -19,7 +19,8 @@ public class AccessController : MonoBehaviour
     public enum AccessRights
     {
         View = 0,
-        Edit
+        Edit,
+        ViewDelete
     } 
     public static bool isManager = false;
 }

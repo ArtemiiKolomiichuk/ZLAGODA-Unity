@@ -8,7 +8,8 @@ namespace Entities
         InputField = 0,
         FKButton,
         Toggle,
-        Date
+        Date,
+        Password
     }
 
     public abstract class Entity
@@ -148,7 +149,7 @@ namespace Entities
 
         public static new List<CellType> CellTypes()
         {
-            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.FKButton, CellType.InputField,CellType.Date, CellType.Date, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField};
+            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.FKButton, CellType.InputField,CellType.Date, CellType.Date, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.Password};
         }
     }
 

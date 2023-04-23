@@ -90,6 +90,14 @@ public class TableFiller : MonoBehaviour
                         parent.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().interactable = false;
                     }
                     break;
+                case CellType.Password:
+                    parent.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().text = InputPassword.Encrypt(dataRow[i]);
+                    parent.GetChild(i).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
+                    if(accessRights == AccessRights.View)
+                    {
+                        parent.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().interactable = false;
+                    }
+                    break;
                 case CellType.FKButton:
                     var input = parent.GetChild(i).GetChild(0).GetComponent<InputFK>();
                     input.Init(FKs[input.index], dataRow[i]);

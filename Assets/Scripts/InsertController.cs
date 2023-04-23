@@ -121,6 +121,20 @@ public class InsertController : MonoBehaviour
             "0"
             };
         }
+        if(SceneController.Instance.currentEntity == "Employee")
+        {
+            int i = inputs.Length - 1;
+            if(inputs[i].GetComponent<TMPro.TMP_InputField>().text.Length == 0)
+            {
+                values.Add("NULL");
+                ExceptionHandler.Instance.ShowMessage("Invalid password","Password cannot be empty");
+            }
+            else
+            {
+                values.Add($"{inputs[i].GetComponent<TMPro.TMP_InputField>().text}");
+            }
+            values[values.Count - 1] = $"\"{InputPassword.Encrypt(values[values.Count - 1])}\"";
+        }
         if (SceneController.Instance.TryAddRow(values))
         {
             try{

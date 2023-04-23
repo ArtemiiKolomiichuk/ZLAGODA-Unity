@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.Search;
+using System;
+using Entities;
 
 public class AuthenticationController : MonoBehaviour
 {
@@ -17,14 +20,35 @@ public class AuthenticationController : MonoBehaviour
         loginButton.onClick.AddListener(() => Login());
     }
 
+    private void AuthenticationFailed()
+    {
+        //TODO: Show error message
+    }
+
     private void Login()
     {
-        //TODO: Add authentication logic
-        //TODO: Screen size
-        Screen.SetResolution(1366, 768, FullScreenMode.Windowed);
-        //~ExceptionHandler.ShowMessage("No user", "Login is incorrect");
-        AccessController.isManager = true;
-        PersistentData.userId = 1;
-        SceneManager.LoadScene("Menu-Manager");
+        string login = loginInput.text;
+        string password = passwordInput.text;
+
+
+        var users = SQLController.Instance.ExecuteQuery<Employee>(@$"SELECT * FROM Employee WHERE phone_number='{login}' AND password='{password}'");
+
+        List<List<string>> loginsData = new List<List<string>>();
+        foreach (var user in users)
+        {
+            loginsData.Add(user.ToList());
+        }
+
+        if (loginsData.Count != 0)
+        {
+            //TODO: Define user's access
+            Screen.SetResolution(1366, 768, FullScreenMode.Windowed);
+            SceneManager.LoadScene("Menu");
+        }
+        else
+        {
+            AuthenticationFailed();
+        }
     }
+
 }

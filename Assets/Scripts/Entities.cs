@@ -1,3 +1,4 @@
+using Entities;
 using System.Collections.Generic;
 
 namespace Entities
@@ -120,7 +121,7 @@ namespace Entities
 
     public class Employee : Entity
     {
-        public static new readonly int dimensions = 12;
+        public static new readonly int dimensions = 13;
         public int id_employee { get; set; }
         public string name { get; set; }
         public string last_name { get; set; }
@@ -133,6 +134,7 @@ namespace Entities
         public string city { get; set; }
         public string street { get; set; }
         public int index { get; set; }
+        public string password { get; set; }
 
         public override string ToString()
         {
@@ -141,12 +143,12 @@ namespace Entities
 
         public override List<string> ToList()
         {
-            return new List<string> { id_employee.ToString(), name, last_name, patronymic, role, salary.ToString(), date_of_start, date_of_birth, phone_number, city, street, index.ToString() };
+            return new List<string> { id_employee.ToString(), name, last_name, patronymic, role, salary.ToString(), date_of_start, date_of_birth, phone_number, city, street, index.ToString(), password };
         }
 
         public static new List<CellType> CellTypes()
         {
-            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.FKButton, CellType.InputField,CellType.Date, CellType.Date, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField};
+            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.FKButton, CellType.InputField,CellType.Date, CellType.Date, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField};
         }
     }
 
@@ -220,10 +222,7 @@ namespace Entities
             return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField };
         }
     }
-
-    /// <summary>
-    /// Universal class for queries 14,19,20,21
-    /// </summary>
+    
     public class Report 
     {
         public decimal total_revenue { get; set; }
@@ -236,3 +235,4 @@ namespace Entities
         public string charachteristics { get; set; }
     }
 }
+

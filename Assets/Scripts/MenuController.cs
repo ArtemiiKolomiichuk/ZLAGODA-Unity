@@ -47,8 +47,10 @@ public class MenuController : MonoBehaviour
                 if(manager)
                     SceneController.Instance.accessRights = ViewDelete;
                 if(!manager)
+                {
                     SceneController.Instance.accessRights = Edit;
-                    //TODO: ~own bills
+                    SceneController.Instance.whereHaving = $"WHERE id_employee = '{PersistentData.userId}'";
+                }
                 break;
             case "1.Cards":
                 SceneController.Instance.currentEntity = "Customer_card";

@@ -29,8 +29,9 @@ public class SearchBlock : MonoBehaviour
         {
             inputs[0].GetComponent<TMP_Dropdown>().ClearOptions();
             inputs[0].GetComponent<TMP_Dropdown>().AddOptions(SceneController.Instance.GetFKs("Seller"));
-            inputs[1].GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
+            inputs[1].GetComponent<Toggle>().interactable = false;
             inputs[2].GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
+            inputs[3].GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
             if(!PersistentData.isManager)
             {
                 inputs[0].GetComponent<TMP_Dropdown>().ClearOptions();
@@ -48,6 +49,10 @@ public class SearchBlock : MonoBehaviour
             if(inputs[i].GetComponent<TMP_InputField>() != null)
             {
                 inputValues[i] = inputs[i].GetComponent<TMP_InputField>().text;
+            }
+            else if(inputs[i].GetComponent<Toggle>() != null)
+            {
+                inputValues[i] = inputs[i].GetComponent<Toggle>().isOn.ToString();
             }
             else if(inputs[i].GetComponent<TMP_Dropdown>() != null)
             {
@@ -86,9 +91,8 @@ public class SearchBlock : MonoBehaviour
         4 => $"WHERE category_number = '{inputs[0]}'",
         //5 => $"WHERE id LIKE '%{inputs[0]}%'",
         6 => $"WHERE product_name LIKE '%{inputs[0]}%'",
-        7 => $"WHERE id_employee = '{inputs[0]}' AND print_date BETWEEN '{inputs[1]}' AND '{inputs[2]}'",
-        8 => $"WHERE check_number LIKE '%{inputs[0]}%'",
+        7 => $"WHERE id_employee {((bool.Parse(inputs[1]) && PersistentData.isManager) ? ("LIKE '%%'") : ($"= '{inputs[0]}'"))} AND print_date BETWEEN '{inputs[2]}' AND '{inputs[3]}'",
+        8 => $"WHERE check_number LIKE '%{inputs[0]}%' {(!PersistentData.isManager ? $"AND id_employee = '{PersistentData.userString}'" : "")}",
         _ => throw new System.NotImplementedException($"GetWhereHaving {index} not implemented")
     };
-    
 }

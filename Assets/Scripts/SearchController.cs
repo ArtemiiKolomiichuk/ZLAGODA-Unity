@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SearchController : MonoBehaviour
@@ -37,7 +38,15 @@ public class SearchController : MonoBehaviour
     {
         SceneController.Instance.whereHaving = "";
         oldWhereHaving = "";
-        SceneController.Instance.ReloadOrdered(SceneController.Instance.pkName, false);
+        if(SceneManager.GetActiveScene().name == "Bill" && PersistentData.isManager)
+        {
+            SceneController.Instance.whereHaving = $"WHERE id_employee = '{PersistentData.userId}'";
+            oldWhereHaving = $"WHERE id_employee = '{PersistentData.userId}'";
+        }
+        else
+        {
+            SceneController.Instance.ReloadOrdered(SceneController.Instance.pkName, false);
+        }
     }
 
     public void Show()

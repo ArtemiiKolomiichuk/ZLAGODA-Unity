@@ -94,6 +94,9 @@ public class MenuController : MonoBehaviour
                 Show(2);
                 break;
             case "15.Seller":
+                Show(1);
+                Process(3);
+                break;
             case "7.":
             default:
                 throw new System.NotImplementedException($"LoadScene for \"{code}\"");
@@ -106,7 +109,7 @@ public class MenuController : MonoBehaviour
         var dropdown = canvases[0].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetComponent<TMP_Dropdown>();
         dropdown.ClearOptions();
         dropdown.AddOptions(SceneController.Instance.GetFKs("Product"));
-        if(true)//manager
+        if(AccessController.isManager)//manager
         {
             {
                 var table = canvases[1].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
@@ -217,6 +220,28 @@ public class MenuController : MonoBehaviour
                     ");
                 canvases[2].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
                 $"Загальна кількість проданих товарів: {reports21[0].total_amount} шт.";
+                break;
+            case 3:
+                var seller = SQLController.Instance.ExecuteQuery<Entities.Employee>(
+                    $@"
+                    SELECT 
+                        *
+                    FROM
+                        Employee
+                    WHERE
+                        id_employee = '{PersistentData.userId}';
+                    ");
+                var e = seller[0];
+                canvases[1].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = 
+                @$"Ім'я: {e.name}
+Прізвище: {e.last_name}
+По батькові: {e.patronymic}
+Дата народження: {e.date_of_birth}
+Дата прийому на роботу: {e.date_of_start}
+Посада: {(e.role == "2" ? "Продавець" : "Менеджер")}
+Зарплата: {e.salary}
+Адреса: {e.city}, {e.street}, {e.zipcode}
+Телефон: {e.phone_number}";
                 break;
             default:
                 throw new System.NotImplementedException($"Process for \"{index}\"");

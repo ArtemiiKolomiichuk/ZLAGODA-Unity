@@ -108,7 +108,7 @@ public class InsertController : MonoBehaviour
             values = new List<string>() { inputs[0].GetComponent<TMPro.TMP_InputField>().text, 
             inputs[1].GetComponent<InputFK>().GetPK(),
             inputs[2].GetComponent<InputFK>().GetPK(),
-            "0", PersistentData.chosenDate,
+            "0", $"\"{System.DateTime.Now.ToString("yyyy-MM-dd")}\"",
             "0","0"};
         }
         if(SceneController.Instance.currentEntity == "Check_row")

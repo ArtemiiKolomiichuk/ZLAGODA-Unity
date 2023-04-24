@@ -77,6 +77,17 @@ public class InsertController : MonoBehaviour
                         values.Add("NULL");
                         continue;
                     }
+                    {
+                        var t = (inputs[i]).GetComponent<TMPro.TMP_InputField>().text;
+                        if(decimal.TryParse(t.Replace('.',','), out decimal d))
+                        {
+                            if(d < 0)
+                            {
+                                ExceptionHandler.Instance.ShowMessage("Negative value", "Negative value is not allowed");
+                                return;
+                            }
+                        }
+                    }
                     if(inputs[i].GetComponent<TMPro.TMP_InputField>().contentType == TMPro.TMP_InputField.ContentType.DecimalNumber)
                     {
                         values.Add(inputs[i].GetComponent<TMPro.TMP_InputField>().text.Replace(',', '.'));

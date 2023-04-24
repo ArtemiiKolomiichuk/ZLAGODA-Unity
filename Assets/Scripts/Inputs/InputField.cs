@@ -6,7 +6,7 @@ using System;
 
 public abstract class InputField : MonoBehaviour
 {
-    private TMPro.TMP_InputField inputField;
+    protected TMPro.TMP_InputField inputField;
     public string oldText;
     protected Transform parent => transform.parent.parent;
     public string attribute;
@@ -21,8 +21,10 @@ public abstract class InputField : MonoBehaviour
         inputField.onSelect.AddListener(OnSelect);
         inputField.onDeselect.AddListener(OnDeselect);
         oldText = inputField.text;
+        Start2();
     }
-    private void OnSelect(string newText)
+    protected virtual void Start2(){}
+    protected virtual void OnSelect(string newText)
     {
         oldText = newText;
     }

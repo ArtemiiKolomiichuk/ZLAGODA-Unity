@@ -91,7 +91,8 @@ public class TableFiller : MonoBehaviour
                     }
                     break;
                 case CellType.Password:
-                    parent.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().text = InputPassword.Encrypt(dataRow[i]);
+                    parent.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().text = dataRow[i];//InputPassword.Encrypt(dataRow[i]);
+                    parent.GetChild(i).GetChild(0).GetComponent<TMPro.TMP_InputField>().contentType = TMPro.TMP_InputField.ContentType.Password;
                     parent.GetChild(i).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
                     if(accessRights == AccessRights.View)
                     {

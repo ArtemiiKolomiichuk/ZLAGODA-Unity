@@ -20,16 +20,10 @@ public class AuthenticationController : MonoBehaviour
         loginButton.onClick.AddListener(() => Login());
     }
 
-    private void AuthenticationFailed()
-    {
-        //TODO: Show error message
-    }
-
     private void Login()
     {
         string login = loginInput.text;
         string password = InputPassword.Encrypt(passwordInput.text);
-        Console.WriteLine(password);
         var users = SQLController.Instance.ExecuteQuery<Employee>(@$"SELECT * FROM Employee WHERE phone_number='{login}' AND password='{password}'");
 
         List<List<string>> loginsData = new List<List<string>>();
@@ -40,13 +34,19 @@ public class AuthenticationController : MonoBehaviour
 
         if (loginsData.Count != 0)
         {
-            //TODO: Define user's access
+            AccessController.isManager = (loginsData[0][4] == "1");
+            PersistentData.userId = int.Parse(loginsData[0][0]);
+            PersistentData.userString = $"{loginsData[0][0]}: {loginsData[0][1]} {loginsData[0][2]} {loginsData[0][3]}";
+            //FIXME: resolution
             Screen.SetResolution(1366, 768, FullScreenMode.Windowed);
-            SceneManager.LoadScene("Menu");
+            if(AccessController.isManager)
+                SceneManager.LoadScene("Menu-Manager");
+            else
+                SceneManager.LoadScene("Menu-Seller");
         }
         else
         {
-            AuthenticationFailed();
+            ExceptionHandler.Instance.ShowMessage("No user found","Incorrect login or password");
         }
     }
 

@@ -391,6 +391,10 @@ PrefabInstance:
       propertyPath: attribute
       value: percent
       objectReference: {fileID: 0}
+    - target: {fileID: 2768379640330637747, guid: b242efe6bd28eff4eb57b5ee80ecf2fa, type: 3}
+      propertyPath: updateRowOnEdit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3990111438217105643, guid: b242efe6bd28eff4eb57b5ee80ecf2fa, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

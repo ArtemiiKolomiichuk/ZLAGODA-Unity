@@ -294,6 +294,10 @@ public class SceneController : MonoBehaviour
                 var employees = SQLController.Instance.ExecuteQuery<Employee>(query);
                 TableFiller.Instance.PaintRow(employees[0].ToList(), Employee.CellTypes(), parent, Employee.dimensions, even, new List<List<string>>{GetFKs("Role")}, accessRights);
                 break;
+            case "Customer_card":
+                var customer_cards = SQLController.Instance.ExecuteQuery<Customer_card>(query);
+                TableFiller.Instance.PaintRow(customer_cards[0].ToList(), Customer_card.CellTypes(), parent, Customer_card.dimensions, even, null, accessRights);
+                break;
             default:
                 throw new NotImplementedException($"Repainting the row of \"{currentEntity.ToString()}\"");
         }

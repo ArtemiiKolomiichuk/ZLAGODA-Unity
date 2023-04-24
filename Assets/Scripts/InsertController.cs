@@ -135,6 +135,25 @@ public class InsertController : MonoBehaviour
             }
             values[values.Count - 1] = $"\"{InputPassword.Encrypt(values[values.Count - 1])}\"";
         }
+        if(SceneController.Instance.currentEntity == "Customer_card")
+        {
+            decimal val = decimal.TryParse(values[values.Count - 1].Replace('.', ','), out val) ? val : 0;
+            if(val < 0)
+            {
+                ExceptionHandler.Instance.ShowMessage("Invalid value", "Percent cannot be negative");
+                return;
+            }
+            else if(val > 100)
+            {
+                ExceptionHandler.Instance.ShowMessage("Invalid value", "Percent cannot be greater than 100");
+                return;
+            }
+            else if(val >=1)
+            {
+                val = val / 100;
+            }
+            values[values.Count - 1] = $"'{val.ToString().Replace(',', '.')}'";
+        }
         if (SceneController.Instance.TryAddRow(values))
         {
             try{

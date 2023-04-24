@@ -36,9 +36,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4926829760853235252, guid: 395636a8a40225b4ba1b948cb4dc9acf, type: 3}
+      propertyPath: m_ContentType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926829760853235252, guid: 395636a8a40225b4ba1b948cb4dc9acf, type: 3}
+      propertyPath: m_KeyboardType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926829760853235252, guid: 395636a8a40225b4ba1b948cb4dc9acf, type: 3}
+      propertyPath: m_CharacterValidation
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6570267058934149173, guid: 395636a8a40225b4ba1b948cb4dc9acf, type: 3}
       propertyPath: m_fontSize
-      value: 56.7
+      value: 55.4
       objectReference: {fileID: 0}
     - target: {fileID: 9009848669245956784, guid: 395636a8a40225b4ba1b948cb4dc9acf, type: 3}
       propertyPath: m_Pivot.x
@@ -151,3 +163,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oldText: 
   attribute: 
+  updateRowOnEdit: 0

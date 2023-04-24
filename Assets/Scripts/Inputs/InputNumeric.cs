@@ -12,6 +12,17 @@ public class InputNumeric : InputField
         {
             if (value >= 0)
             {
+                if(attribute == "percent")
+                {
+                    if (value > 100)
+                    {
+                        return false;
+                    }
+                    else if(value >= 1)
+                    {
+                        value = value/100;                    
+                    }
+                }
                 if (!SceneController.Instance.TryUpdateRow(
                     attribute,
                     value.ToString().Replace(',', '.'),

@@ -10,20 +10,24 @@ public class InputNumeric : InputField
         decimal value;
         if (decimal.TryParse(newText.Replace('.', ','), out value))
         {
-            if(!SceneController.Instance.TryUpdateRow(
-                attribute, 
-                value.ToString().Replace(',', '.'),
-                parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText))
+            if (value >= 0)
             {
-                return false;
-            }
+                if (!SceneController.Instance.TryUpdateRow(
+                    attribute,
+                    value.ToString().Replace(',', '.'),
+                    parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText))
+                {
+                    return false;
+                }
 
-            if(updateRowOnEdit)
-            {
-                SceneController.Instance.RepaintRow(parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText, parent, 
-                gameObject.GetComponent<Image>().color.r < 0.98f);
-            }
-            return true;
+                if (updateRowOnEdit)
+                {
+                    SceneController.Instance.RepaintRow(parent.GetChild(0).GetChild(0).GetComponent<InputField>().oldText, parent,
+                    gameObject.GetComponent<Image>().color.r < 0.98f);
+                }
+                return true;
+            } 
+            else { return false; }
         }
         return false;
     }

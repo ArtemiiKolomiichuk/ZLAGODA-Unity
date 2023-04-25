@@ -158,15 +158,15 @@ public class MenuController : MonoBehaviour
                         p.product_name,
                         p.charachteristics,
                         p.real_price as price,
-                        SUM(sp.amount) - 
-                        (SELECT SUM(c.row_amount) 
+                        coalesce(SUM(sp.amount),0) - 
+                        coalesce((SELECT SUM(c.row_amount) 
                             FROM Check_row c 
-                            WHERE c.id_product = {id}) AS amount 
+                            WHERE c.id_product = {id}),0) AS amount 
                         FROM 
-                            Store_product sp 
-                            JOIN Product p ON sp.id_product = p.id_product 
+                            Product p
+                            LEFT JOIN Store_product sp  ON sp.id_product = p.id_product 
                         WHERE 
-                            sp.id_product = {id};");
+                            p.id_product = {id};");
                 canvases[0].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = 
                 $"В наявності {reports[0].amount} шт. по ціні {reports[0].price} грн. за шт.\nНазва: {reports[0].product_name}\nХарактеристики: {reports[0].charachteristics}";
                 break;

@@ -107,7 +107,7 @@ namespace Entities
 
         public override string ToString()
         {
-            return $"{card_number}: {name} {last_name} {patronymic}";
+            return $"{card_number}: {last_name} {name} {patronymic}";
         }
 
         public override List<string> ToList()

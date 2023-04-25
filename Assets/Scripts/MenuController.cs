@@ -19,31 +19,30 @@ public class MenuController : MonoBehaviour
         {
             case "1.Category":
                 SceneController.Instance.currentEntity = "Category";
-                SceneManager.LoadScene("Category");
                 if(manager)
                     SceneController.Instance.accessRights = Edit;
+                SceneManager.LoadScene("Category");
                 break;
             case "1.Employee":
                 SceneController.Instance.currentEntity = "Employee";
-                SceneManager.LoadScene("Employee");
                 if(manager)
                     SceneController.Instance.accessRights = Edit;
+                SceneManager.LoadScene("Employee");
                 break;
             case "1.Product":
-                SceneController.Instance.currentEntity = "Product";
-                SceneManager.LoadScene("Product");
+                SceneController.Instance.currentEntity = "Product";                
                 if(manager)
                     SceneController.Instance.accessRights = Edit;
+                SceneManager.LoadScene("Product");
                 break;
             case "1.SProduct":
-                SceneController.Instance.currentEntity = "Store_product";
-                SceneManager.LoadScene("Store_product");
                 if(manager)
                     SceneController.Instance.accessRights = Edit;
+                SceneController.Instance.currentEntity = "Store_product";
+                SceneManager.LoadScene("Store_product");                
                 break;
             case "1.Bill":
                 SceneController.Instance.currentEntity = "Bill";
-                SceneManager.LoadScene("Bill");
                 if(manager)
                     SceneController.Instance.accessRights = ViewDelete;
                 if(!manager)
@@ -51,23 +50,24 @@ public class MenuController : MonoBehaviour
                     SceneController.Instance.accessRights = Edit;
                     SceneController.Instance.whereHaving = $"WHERE id_employee = '{PersistentData.userId}'";
                 }
+                SceneManager.LoadScene("Bill");                
                 break;
             case "1.Cards":
                 SceneController.Instance.currentEntity = "Customer_card";
-                SceneManager.LoadScene("Customer_card");
                 if(manager)
                     SceneController.Instance.accessRights = Edit;
                 if(!manager)
                     SceneController.Instance.accessRights = Edit;
+                SceneManager.LoadScene("Customer_card");
                 break;
             case "1.AllRows":
                 SceneController.Instance.currentEntity = "Check_row";
-                SceneManager.LoadScene("Check_row");
                 if(!manager)
                 {
                     SceneController.Instance.whereHaving = 
                     $"WHERE check_number IN (SELECT check_number FROM Bill WHERE id_employee = '{PersistentData.userId}')";
                 }
+                SceneManager.LoadScene("Check_row");                
                 break;
             case "15.":
                 SceneController.Instance.currentEntity = "Product";

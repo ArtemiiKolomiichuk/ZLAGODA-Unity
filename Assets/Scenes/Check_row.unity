@@ -954,7 +954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2553311055125467514, guid: 395636a8a40225b4ba1b948cb4dc9acf, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0014953613
+      value: 0.0014953612
       objectReference: {fileID: 0}
     - target: {fileID: 3461193831594899600, guid: 395636a8a40225b4ba1b948cb4dc9acf, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2308,6 +2308,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7934029902644746614, guid: 2540cd8a5325e9f498d4418315adb275, type: 3}
+      propertyPath: m_text
+      value: Back to bills
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934029902644746614, guid: 2540cd8a5325e9f498d4418315adb275, type: 3}
       propertyPath: m_fontSize
       value: 41.8
       objectReference: {fileID: 0}
@@ -3274,7 +3278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2553311055125467514, guid: 395636a8a40225b4ba1b948cb4dc9acf, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0014953613
+      value: 0.0014953612
       objectReference: {fileID: 0}
     - target: {fileID: 3461193831594899600, guid: 395636a8a40225b4ba1b948cb4dc9acf, type: 3}
       propertyPath: m_AnchorMax.y

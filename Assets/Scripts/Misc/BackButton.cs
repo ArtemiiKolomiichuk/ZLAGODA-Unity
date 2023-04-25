@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static AccessController.AccessRights;
 
 public class BackButton : MonoBehaviour
 {
+    private bool manager => AccessController.isManager;
     private void Start()
     {
         GetComponent<Button>().onClick.AddListener(() => GoBack());
@@ -11,31 +13,46 @@ public class BackButton : MonoBehaviour
 
     public void GoBack()
     {
-        if(PersistentData.tableHeader != null)
+        if(SceneManager.GetActiveScene().name == "Check_row")
         {
-            Destroy(PersistentData.tableHeader);
-        }
-        if(PersistentData.tableContent != null)
-        {
-            Destroy(PersistentData.tableContent);
-        }
-        if(SceneManager.GetActiveScene().name == "Menu-Manager" || SceneManager.GetActiveScene().name == "Menu-Seller")
-        {
-            SceneManager.LoadScene("Authentication");
-        }
-        else if (SceneManager.GetActiveScene().name == "Authentication")
-        {
-            Application.Quit();
+            SceneController.Instance.currentEntity = "Bill";
+            if(manager)
+                SceneController.Instance.accessRights = ViewDelete;
+            if(!manager)
+            {
+                SceneController.Instance.accessRights = Edit;
+                SceneController.Instance.whereHaving = $"WHERE id_employee = '{PersistentData.userId}'";
+            }
+            SceneManager.LoadScene("Bill");  
         }
         else
         {
-            if(AccessController.isManager)
+            if(PersistentData.tableHeader != null)
             {
-                SceneManager.LoadScene("Menu-Manager");
+                Destroy(PersistentData.tableHeader);
+            }
+            if(PersistentData.tableContent != null)
+            {
+                Destroy(PersistentData.tableContent);
+            }
+            if(SceneManager.GetActiveScene().name == "Menu-Manager" || SceneManager.GetActiveScene().name == "Menu-Seller")
+            {
+                SceneManager.LoadScene("Authentication");
+            }
+            else if (SceneManager.GetActiveScene().name == "Authentication")
+            {
+                Application.Quit();
             }
             else
             {
-                SceneManager.LoadScene("Menu-Seller");
+                if(AccessController.isManager)
+                {
+                    SceneManager.LoadScene("Menu-Manager");
+                }
+                else
+                {
+                    SceneManager.LoadScene("Menu-Seller");
+                }
             }
         }
     }

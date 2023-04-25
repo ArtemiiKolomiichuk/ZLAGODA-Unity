@@ -19,13 +19,24 @@ public class BackButton : MonoBehaviour
         {
             Destroy(PersistentData.tableContent);
         }
-        if(AccessController.isManager)
+        if(SceneManager.GetActiveScene().name == "Menu-Manager" || SceneManager.GetActiveScene().name == "Menu-Seller")
         {
-            SceneManager.LoadScene("Menu-Manager");
+            SceneManager.LoadScene("Authentication");
+        }
+        else if (SceneManager.GetActiveScene().name == "Authentication")
+        {
+            Application.Quit();
         }
         else
         {
-            SceneManager.LoadScene("Menu-Seller");
+            if(AccessController.isManager)
+            {
+                SceneManager.LoadScene("Menu-Manager");
+            }
+            else
+            {
+                SceneManager.LoadScene("Menu-Seller");
+            }
         }
     }
 }

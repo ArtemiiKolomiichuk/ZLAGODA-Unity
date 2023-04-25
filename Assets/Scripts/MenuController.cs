@@ -166,7 +166,7 @@ public class MenuController : MonoBehaviour
                             Store_product sp 
                             JOIN Product p ON sp.id_product = p.id_product 
                         WHERE 
-                            sp.id_product = {17};");
+                            sp.id_product = {id};");
                 canvases[0].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = 
                 $"В наявності {reports[0].amount} шт. по ціні {reports[0].price} грн. за шт.\nНазва: {reports[0].product_name}\nХарактеристики: {reports[0].charachteristics}";
                 break;

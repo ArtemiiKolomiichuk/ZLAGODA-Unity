@@ -101,7 +101,14 @@ public class TableFiller : MonoBehaviour
                     break;
                 case CellType.FKButton:
                     var input = parent.GetChild(i).GetChild(0).GetComponent<InputFK>();
-                    input.Init(FKs[input.index], dataRow[i]);
+                    if(dataRow[i] != "0")
+                    {
+                        input.Init(FKs[input.index], dataRow[i]);
+                    }
+                    else
+                    {
+                        input.Init();
+                    }
                     if(even)
                     {
                         input.dropdown.colors = new ColorBlock()

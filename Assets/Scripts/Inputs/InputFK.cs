@@ -23,7 +23,13 @@ public class InputFK : MonoBehaviour
             dropdown.onValueChanged.AddListener(OnValueChanged);
         }
     }
-
+    
+    public void Init()
+    {
+        dropdown.ClearOptions();
+        dropdown.AddOptions(new List<string> { " " });
+        dropdown.value = 0;
+    }
     public void Init(List<string> options)
     {
         dropdown.ClearOptions();

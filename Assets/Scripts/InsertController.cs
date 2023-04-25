@@ -47,6 +47,15 @@ public class InsertController : MonoBehaviour
                 }
             }
         }
+        if(SceneController.Instance.currentEntity == "Bill")
+        {
+            if(!PersistentData.isManager)
+            {
+                inputs[1].GetComponent<TMPro.TMP_Dropdown>().ClearOptions();
+                inputs[1].GetComponent<TMPro.TMP_Dropdown>().AddOptions(new List<string>{PersistentData.userString});
+                inputs[1].GetComponent<TMPro.TMP_Dropdown>().interactable = false;
+            }
+        }
         if(OnInsertButton.Instance != null)
             OnInsertButton.Instance.GetComponent<Button>().onClick.AddListener(() => gameObject.SetActive(true));
         Hide();
@@ -116,11 +125,14 @@ public class InsertController : MonoBehaviour
 
         if(SceneController.Instance.currentEntity == "Bill")
         {
-            values = new List<string>() { inputs[0].GetComponent<TMPro.TMP_InputField>().text, 
+            values = new List<string>() { 
+            inputs[0].GetComponent<TMPro.TMP_InputField>().text, 
             inputs[1].GetComponent<InputFK>().GetPK(),
-            inputs[2].GetComponent<InputFK>().GetPK(),
-            "0", $"\"{System.DateTime.Now.ToString("yyyy-MM-dd")}\"",
-            "0","0"};
+            inputs[3].GetComponent<Toggle>().isOn ? "NULL" : inputs[2].GetComponent<InputFK>().GetPK(),
+            "0", 
+            $"\"{System.DateTime.Now.ToString("yyyy-MM-dd")}\"",
+            "0",
+            "0"};
         }
         if(SceneController.Instance.currentEntity == "Check_row")
         {

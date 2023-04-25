@@ -96,8 +96,8 @@ namespace Entities
     {
         public static new readonly int dimensions = 9;
         public int card_number { get; set; }
-        public string name { get; set; }
         public string last_name { get; set; }
+        public string name { get; set; }
         public string patronymic { get; set; }
         public string phone_number { get; set; }
         public string city { get; set; }
@@ -112,7 +112,7 @@ namespace Entities
 
         public override List<string> ToList()
         {
-            return new List<string> { card_number.ToString(), name, last_name, patronymic, phone_number, city, street, zipcode.ToString(), percent.ToString() };
+            return new List<string> { card_number.ToString(), last_name, name, patronymic, phone_number, city, street, zipcode.ToString(), percent.ToString() };
         }
         public static new List<CellType> CellTypes()
         {
@@ -124,8 +124,8 @@ namespace Entities
     {
         public static new readonly int dimensions = 13;
         public int id_employee { get; set; }
-        public string name { get; set; }
         public string last_name { get; set; }
+        public string name { get; set; }
         public string patronymic { get; set; }
         public string role { get; set; }
         public decimal salary { get; set; }
@@ -144,7 +144,7 @@ namespace Entities
 
         public override List<string> ToList()
         {
-            return new List<string> { id_employee.ToString(), name, last_name, patronymic, role, salary.ToString(), date_of_start, date_of_birth, phone_number, city, street, zipcode.ToString(), password };
+            return new List<string> { id_employee.ToString(), last_name, name, patronymic, role, salary.ToString(), date_of_start, date_of_birth, phone_number, city, street, zipcode.ToString(), password };
         }
 
         public static new List<CellType> CellTypes()

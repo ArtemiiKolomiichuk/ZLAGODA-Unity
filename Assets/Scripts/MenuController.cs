@@ -190,14 +190,14 @@ public class MenuController : MonoBehaviour
                             WHERE 
                                 {where}
                             AND 
-                                print_date BETWEEN '{from.ToString()}' AND '{to.ToString()}')
+                                print_date BETWEEN '{from.ToString("yyyy-MM-dd")}' AND '{to.ToString("yyyy-MM-dd")}')
                         ) AS total_amount
                     FROM 
                         Bill b 
                     WHERE 
                         b.{where}
                     AND 
-                        b.print_date BETWEEN '{from.ToString()}' AND '{to.ToString()}';
+                        b.print_date BETWEEN '{from.ToString("yyyy-MM-dd")}' AND '{to.ToString("yyyy-MM-dd")}';
                     ");
                 canvases[1].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = 
                 $"Загальний дохід: {reports19[0].total_revenue} грн.\nЗагальна кількість проданих товарів: {reports19[0].total_amount} шт.\n";
@@ -217,7 +217,7 @@ public class MenuController : MonoBehaviour
                     WHERE 
                         cr.id_product = '{idProduct}'
                     AND 
-                        b.print_date BETWEEN '{from2.ToString()}' AND '{to2.ToString()}';
+                        b.print_date BETWEEN '{from2.ToString("yyyy-MM-dd")}' AND '{to2.ToString("yyyy-MM-dd")}';
                     ");
                 canvases[2].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
                 $"Загальна кількість проданих товарів: {reports21[0].total_amount} шт.";

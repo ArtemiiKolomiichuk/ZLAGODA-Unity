@@ -67,7 +67,6 @@ public class MenuController : MonoBehaviour
                 {
                     SceneController.Instance.whereHaving = 
                     $"WHERE check_number IN (SELECT check_number FROM Bill WHERE id_employee = '{PersistentData.userId}')";
-                    SceneController.Instance.accessRights = Edit;
                 }
                 break;
             case "15.":

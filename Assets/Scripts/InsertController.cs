@@ -124,7 +124,8 @@ public class InsertController : MonoBehaviour
         }
         if(SceneController.Instance.currentEntity == "Check_row")
         {
-            values = new List<string>() { inputs[0].GetComponent<TMPro.TMP_InputField>().text, 
+            values = new List<string>() { 
+            inputs[0].GetComponent<TMPro.TMP_InputField>().text, 
             inputs[1].GetComponent<TMPro.TMP_InputField>().text,
             "0",
             PersistentData.additionalData,

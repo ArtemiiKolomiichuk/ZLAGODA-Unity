@@ -11,6 +11,7 @@ public class OnDiveInButton : MonoBehaviour
         SceneController.Instance.selectFrom = "";
         SceneController.Instance.currentEntity = "Check_row";
         SceneController.Instance.whereHaving = $"WHERE check_number = {id}";
+        PersistentData.additionalData = id.ToString();
         SceneManager.LoadScene("Check_row");
     }
 }

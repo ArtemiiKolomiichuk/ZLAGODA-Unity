@@ -127,6 +127,9 @@ public class MenuController : MonoBehaviour
             case "Z2K":
                 Show(3);
                 break;
+            case "Z1O":
+                Show(4);
+                break;
             case "7.":
             default:
                 throw new System.NotImplementedException($"LoadScene for \"{code}\"");
@@ -162,6 +165,10 @@ public class MenuController : MonoBehaviour
                 var table = canvases[3].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
                 table.GetChild(0).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
                 table.GetChild(1).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
+            }
+            {
+                var table = canvases[4].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+                table.GetChild(0).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
             }
         }
         HideAll();
@@ -292,6 +299,21 @@ GROUP BY
     p.id_product
 ";
                 SceneManager.LoadScene("Sales_report");
+                break;
+            case 5:
+                var date = canvases[4].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_InputField>().text;
+                SceneController.Instance.currentEntity = "Product";
+                SceneController.Instance.whereHaving =
+@$"WHERE id_product NOT IN (
+    SELECT id_product
+    FROM Product
+    WHERE id_product NOT IN (
+        SELECT id_product
+        FROM Store_product
+        WHERE best_before>'{date}'
+    )
+)";
+                SceneManager.LoadScene("Product");
                 break;
             default:
                 throw new System.NotImplementedException($"Process for \"{index}\"");

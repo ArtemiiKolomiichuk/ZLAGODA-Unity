@@ -130,6 +130,10 @@ public class MenuController : MonoBehaviour
             case "Z1O":
                 Show(4);
                 break;
+            case "Z2O":
+                SceneController.Instance.currentEntity = "Category_products";
+                SceneManager.LoadScene("Category_products");
+                break;
             case "7.":
             default:
                 throw new System.NotImplementedException($"LoadScene for \"{code}\"");

@@ -1,5 +1,6 @@
 using Entities;
 using System.Collections.Generic;
+using System.Data;
 
 namespace Entities
 {
@@ -117,6 +118,30 @@ namespace Entities
         public static new List<CellType> CellTypes()
         {
             return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField, CellType.InputField };
+        }
+    }
+
+
+    public class Category_products : Entity
+    {
+        public static new readonly int dimensions = 3;
+        public int category_number { get; set; }
+        public string category_name { get; set; }
+        public int product_count { get; set; }
+
+        public override string ToString()
+        {
+            return $"{category_number}: {category_name} {product_count}";
+        }
+
+        public override List<string> ToList()
+        {
+            return new List<string> { category_number.ToString(), category_name, product_count.ToString() };
+        }
+
+        public static new List<CellType> CellTypes()
+        {
+            return new List<CellType> { CellType.InputField, CellType.InputField, CellType.InputField};
         }
     }
 

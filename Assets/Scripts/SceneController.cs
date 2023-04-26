@@ -73,6 +73,14 @@ FROM
     JOIN Check_row cr ON p.id_product = cr.id_product
     JOIN Bill b ON cr.check_number = b.check_number
 ";
+                case "Category_products":
+                    return @"SELECT
+Category.*, COUNT(Product.id_product) as product_count
+FROM Category
+LEFT JOIN Product ON Category.category_number = Product.category_number
+GROUP BY Category.category_number
+";
+
                 default:
                     throw new NotImplementedException($"SelectFrom for \"{currentEntity}\"");
             }
@@ -126,6 +134,8 @@ FROM
                 return Customer_card.CellTypes();
             case "Check_row":
                 return Check_row.CellTypes();
+            case "Category_products":
+                return Category_products.CellTypes();
             default:
                 throw new NotImplementedException($"CellTypes for \"{currentEntity}\"");
         }
@@ -218,13 +228,23 @@ FROM
         switch(currentEntity)
         {
             case "Category":
-                var categories = SQLController.Instance.ExecuteQuery<Category>(query);
+                var categories = SQLController.Instance.ExecuteQuery<Category_products>(query);
                 List<List<string>> categoriesData = new List<List<string>>();
                 foreach (var category in categories)
                 {
                     categoriesData.Add(category.ToList());
                 }
-                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions, null, accessRights);
+                TableFiller.Instance.FillTable(categoriesData, Category_products.CellTypes(), Category_products.dimensions, null, accessRights);
+                break;
+            case "Category_products":
+                var categories_info = SQLController.Instance.ExecuteQuery<Category_products>(query);
+                List<List<string>> categoriesInfoData = new List<List<string>>();
+                foreach (var category in categories_info)
+                {
+                    categoriesInfoData.Add(category.ToList());
+                }
+                TableFiller.Instance.FillTable(categoriesInfoData, Category_products.CellTypes(), Category_products.dimensions, null, AccessController.AccessRights.View);
+                ReloadOrdered("product_count", true);
                 break;
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
@@ -334,6 +354,16 @@ FROM
 
         switch (currentEntity)
         {
+            case "Category_products":
+                var categories_info = SQLController.Instance.ExecuteQuery<Category_products>(query);
+                List<List<string>> categoriesInfoData = new List<List<string>>();
+                foreach (var category in categories_info)
+                {
+                    categoriesInfoData.Add(category.ToList());
+                }
+                TableFiller.Instance.FillTable(categoriesInfoData, Category_products.CellTypes(), Category_products.dimensions, null, AccessController.AccessRights.View);
+                break;
+
             case "Category":
                 var categories = SQLController.Instance.ExecuteQuery<Category>(query);
                 List<List<string>> categoriesData = new List<List<string>>();

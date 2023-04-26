@@ -41,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Sales_report.unity
     guid: 8ac5c9bad1379034894e40606f5964e4
+  - enabled: 1
+    path: Assets/Scenes/Category_products.unity
+    guid: 34eeec260ab88274f9a332667d2e24b7
   m_configObjects: {}

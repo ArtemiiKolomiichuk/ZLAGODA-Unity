@@ -137,11 +137,12 @@ public class TableFiller : MonoBehaviour
                     }
                     break;
                 case CellType.Date:
-                    parent.GetChild(i).GetChild(0).GetComponent<InputDate>().Init(dataRow[i]);
-                    //TODO: parent.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
+                    var picker = parent.GetChild(i).GetChild(0).GetComponent<InputDate>().GetDatePicker();
+                    picker.GetComponent<InputDate>().Init(dataRow[i]);
+                    picker.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color = even ? lightGray : white;
                     if(accessRights == AccessRights.View)
                     {
-                        var picker = parent.GetChild(i).GetChild(0).GetComponent<InputDate>().GetDatePicker();
+                        
                         picker.Disable();
                         picker.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color = new Color(0.7843f, 0.7843f, 0.7843f, 0.5f);
                         picker.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().color = new Color(0.7843f, 0.7843f, 0.7843f, 0.5f);

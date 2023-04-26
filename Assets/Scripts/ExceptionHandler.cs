@@ -50,6 +50,13 @@ public class ExceptionHandler : MonoBehaviour
         canvas.enabled = true;
         imageBack.SetActive(true);
         this.title.text = e.GetType().ToString();
+        if(message.ToLower().Contains("constraint"))
+        {
+            message = $@"{message} (There may be several reasons for this error:
+1. You are trying to delete a row that is referenced by another table.
+2. You provided an empty value for a column that does not allow empty values.
+3. You are trying to set an id that already exists in the table.)";
+        }
         description.text = message;
     }
 

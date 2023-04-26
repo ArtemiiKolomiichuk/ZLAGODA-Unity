@@ -202,7 +202,7 @@ namespace Entities
         }
     }
 
-    public class SalesReport : Entity
+    public class Sales_report : Entity
     {
         public static new readonly int dimensions = 4;
         public int id_product { get; set; }

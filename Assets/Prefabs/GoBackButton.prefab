@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7266558258126991189, guid: 5879bb6cf7a5c14449f05edf1fc914d0, type: 3}
       propertyPath: m_text
-      value: "\u0412 \u043C\u0435\u043D\u044E"
+      value: To menu
       objectReference: {fileID: 0}
     - target: {fileID: 7266558258126991189, guid: 5879bb6cf7a5c14449f05edf1fc914d0, type: 3}
       propertyPath: m_fontSize

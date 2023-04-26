@@ -62,6 +62,17 @@ public class SceneController : MonoBehaviour
                         * 
                     FROM 
                         {currentEntity}";
+                case "Sales_report":
+                    return @"SELECT 
+    p.id_product,
+    p.product_name,
+    SUM(cr.row_amount) AS total_amount,
+    SUM(cr.row_price) AS total_revenue
+FROM 
+    Product p 
+    JOIN Check_row cr ON p.id_product = cr.id_product
+    JOIN Bill b ON cr.check_number = b.check_number
+";
                 default:
                     throw new NotImplementedException($"SelectFrom for \"{currentEntity}\"");
             }
@@ -269,6 +280,15 @@ public class SceneController : MonoBehaviour
                 }
                 TableFiller.Instance.FillTable(check_rowsData, Check_row.CellTypes(), Check_row.dimensions, new List<List<string>>{GetFKs("Bill"), GetFKs("Product")}, accessRights);
                 break;
+            case "Sales_report":
+                var sales_reports = SQLController.Instance.ExecuteQuery<Sales_report>(query);
+                List<List<string>> sales_reportsData = new List<List<string>>();
+                foreach (var sales_report in sales_reports)
+                {
+                    sales_reportsData.Add(sales_report.ToList());
+                }
+                TableFiller.Instance.FillTable(sales_reportsData, Sales_report.CellTypes(), Sales_report.dimensions, new List<List<string>>{}, accessRights);
+                break;
             default:
                 throw new NotImplementedException($"Loading the table of \"{currentEntity.ToString()}\"");
         }
@@ -376,6 +396,15 @@ public class SceneController : MonoBehaviour
                     check_rowsData.Add(check_row.ToList());
                 }
                 TableFiller.Instance.FillTable(check_rowsData, Check_row.CellTypes(), Check_row.dimensions, new List<List<string>>{GetFKs("Bill"), GetFKs("Product")}, accessRights);
+                break;
+            case "Sales_report":
+                var sales_reports = SQLController.Instance.ExecuteQuery<Sales_report>(query);
+                List<List<string>> sales_reportsData = new List<List<string>>();
+                foreach (var sales_report in sales_reports)
+                {
+                    sales_reportsData.Add(sales_report.ToList());
+                }
+                TableFiller.Instance.FillTable(sales_reportsData, Sales_report.CellTypes(), Sales_report.dimensions, new List<List<string>>{}, accessRights);
                 break;
             default:
                 throw new NotImplementedException($"Ordering the table of \"{currentEntity.ToString()}\"");

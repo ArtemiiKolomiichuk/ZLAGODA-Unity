@@ -17,7 +17,10 @@ public class BackButton : MonoBehaviour
         {
             SceneController.Instance.currentEntity = "Bill";
             if(manager)
+            {
                 SceneController.Instance.accessRights = ViewDelete;
+                SceneController.Instance.whereHaving = "";
+            }     
             if(!manager)
             {
                 SceneController.Instance.accessRights = Edit;

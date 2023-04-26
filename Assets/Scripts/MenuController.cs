@@ -98,6 +98,35 @@ public class MenuController : MonoBehaviour
                 Show(1);
                 Process(3);
                 break;
+            case "Z1K":
+                SceneController.Instance.currentEntity = "Category";
+                SceneController.Instance.whereHaving =
+@"WHERE NOT EXISTS(
+  SELECT 
+    1
+  FROM 
+    Product p
+  WHERE 
+    p.category_number = Category.category_number
+  AND NOT EXISTS(
+    SELECT 
+        1
+    FROM 
+        Check_row cr
+    INNER JOIN 
+        Product p2 ON cr.id_product = p.id_product
+    WHERE 
+        p2.category_number = Category.category_number
+    AND 
+        cr.row_amount > 0
+  )
+) 
+";
+                SceneManager.LoadScene("Category");
+                break;
+            case "Z2K":
+                Show(3);
+                break;
             case "7.":
             default:
                 throw new System.NotImplementedException($"LoadScene for \"{code}\"");
@@ -128,6 +157,11 @@ public class MenuController : MonoBehaviour
                 dropdown.AddOptions(SceneController.Instance.GetFKs("Product"));
                 table.GetChild(1).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
                 table.GetChild(2).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
+            }
+            {
+                var table = canvases[3].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+                table.GetChild(0).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
+                table.GetChild(1).GetChild(1).GetChild(0).GetComponent<DatePicker>().SelectedDate = new SerializableDate(System.DateTime.Now.Date);
             }
         }
         HideAll();
@@ -234,15 +268,30 @@ public class MenuController : MonoBehaviour
                     ");
                 var e = seller[0];
                 canvases[1].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = 
-                @$"Ім'я: {e.name}
-Прізвище: {e.last_name}
-По батькові: {e.patronymic}
-Дата народження: {e.date_of_birth}
-Дата прийому на роботу: {e.date_of_start}
-Посада: {(e.role == "2" ? "Продавець" : "Менеджер")}
-Зарплата: {e.salary}
-Адреса: {e.city}, {e.street}, {e.zipcode}
-Телефон: {e.phone_number}";
+                @$"ID: {e.id_employee}
+Name: {e.name}
+Last name: {e.last_name}
+Patronymic: {e.patronymic}
+Date of birth: {e.date_of_birth}
+Date of start: {e.date_of_start}
+Role: {(e.role == "2" ? "Seller" : "Manager")}
+Salary: {e.salary}
+Address: {e.city}, {e.street}, {e.zipcode}
+Phone number: {e.phone_number}";
+                break;
+            case 4:
+                //sales statistics
+                var dateFrom = canvases[3].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_InputField>().text;
+                var dateTo = canvases[3].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_InputField>().text;
+                SceneController.Instance.currentEntity = "Sales_report";
+                SceneController.Instance.whereHaving = 
+@$"WHERE 
+    cr.row_amount > 0 AND 
+    b.print_date BETWEEN '{dateFrom}' AND '{dateTo}'
+GROUP BY 
+    p.id_product
+";
+                SceneManager.LoadScene("Sales_report");
                 break;
             default:
                 throw new System.NotImplementedException($"Process for \"{index}\"");

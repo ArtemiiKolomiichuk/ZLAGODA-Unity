@@ -228,13 +228,13 @@ GROUP BY Category.category_number
         switch(currentEntity)
         {
             case "Category":
-                var categories = SQLController.Instance.ExecuteQuery<Category_products>(query);
+                var categories = SQLController.Instance.ExecuteQuery<Category>(query);
                 List<List<string>> categoriesData = new List<List<string>>();
                 foreach (var category in categories)
                 {
                     categoriesData.Add(category.ToList());
                 }
-                TableFiller.Instance.FillTable(categoriesData, Category_products.CellTypes(), Category_products.dimensions, null, accessRights);
+                TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions, null, accessRights);
                 break;
             case "Category_products":
                 var categories_info = SQLController.Instance.ExecuteQuery<Category_products>(query);

@@ -213,7 +213,7 @@ public class MenuController : MonoBehaviour
                         WHERE 
                             p.id_product = {id};");
                 canvases[0].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = 
-                $"В наявності {reports[0].amount} шт. по ціні {reports[0].price} грн. за шт.\nНазва: {reports[0].product_name}\nХарактеристики: {reports[0].charachteristics}";
+                $"In stock {reports[0].amount} pcs. at price {reports[0].price} UAH per pcs.\nName: {reports[0].product_name}\nCharacteristics: {reports[0].charachteristics}"; 
                 break;
             case 1:
                 //19
@@ -245,7 +245,7 @@ public class MenuController : MonoBehaviour
                         b.print_date BETWEEN '{from.ToString("yyyy-MM-dd")}' AND '{to.ToString("yyyy-MM-dd")}';
                     ");
                 canvases[1].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = 
-                $"Загальний дохід: {reports19[0].total_revenue} грн.\nЗагальна кількість проданих товарів: {reports19[0].total_amount} шт.\n";
+                $"Total revenue: {reports19[0].total_revenue} UAH\nTotal amount of sold products: {reports19[0].total_amount} pcs.\n";
                 break;
             case 2:
                 var table2 = canvases[2].transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
@@ -265,7 +265,7 @@ public class MenuController : MonoBehaviour
                         b.print_date BETWEEN '{from2.ToString("yyyy-MM-dd")}' AND '{to2.ToString("yyyy-MM-dd")}';
                     ");
                 canvases[2].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
-                $"Загальна кількість проданих товарів: {reports21[0].total_amount} шт.";
+                $"Total amount of sold products: {reports21[0].total_amount} pcs.\n";
                 break;
             case 3:
                 var seller = SQLController.Instance.ExecuteQuery<Entities.Employee>(

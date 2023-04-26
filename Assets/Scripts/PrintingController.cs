@@ -122,7 +122,7 @@ public class PrintingController : MonoBehaviour
         }
         else if (obj.GetComponent<DatePicker>() != null)
         {
-            return obj.GetComponent<DatePicker>().SelectedDate.ToString();
+            return obj.GetComponent<DatePicker>().SelectedDate.Date.ToString("yyyy-MM-dd");
         }
         else
         {
@@ -171,7 +171,7 @@ public class PrintingController : MonoBehaviour
         ScreenCapture.CaptureScreenshot(path);
         yield return new WaitForSecondsRealtime(0.1f);
         //FIXME: Resolution
-        Screen.SetResolution(1366, 768, FullScreenMode.Windowed);
+        Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
         ShowElements();
     }
 

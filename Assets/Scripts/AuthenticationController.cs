@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.Search;
 using System;
 using Entities;
 
@@ -38,7 +37,7 @@ public class AuthenticationController : MonoBehaviour
             PersistentData.userId = int.Parse(loginsData[0][0]);
             PersistentData.userString = $"{loginsData[0][0]}: {loginsData[0][1]} {loginsData[0][2]} {loginsData[0][3]}";
             //FIXME: resolution
-            Screen.SetResolution(1366, 768, FullScreenMode.Windowed);
+            Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
             if(AccessController.isManager)
                 SceneManager.LoadScene("Menu-Manager");
             else

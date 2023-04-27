@@ -22,9 +22,9 @@ public class SceneController : MonoBehaviour
         SceneManager.sceneLoaded += 
             (scene, mode) =>
             {
-                if (scene.name != "Menu-Manager" && scene.name != "Menu-Seller" && scene.name != "Print" && scene.name != "Authentication")
+                if (scene.name != "Menu-Manager" && scene.name != "Menu-Seller"
+                && scene.name != "Print" && scene.name != "Authentication")
                 {
-                    
                     Load();
                 }
                 else
@@ -50,6 +50,13 @@ public class SceneController : MonoBehaviour
             }
             switch (currentEntity)
             {
+                case "Category_products":
+                    return @"SELECT
+Category.*, COUNT(Product.id_product) as product_count
+FROM Category
+LEFT JOIN Product ON Category.category_number = Product.category_number
+GROUP BY Category.category_number
+";
                 case "Category":
                 case "Product":
                 case "Employee":
@@ -72,13 +79,6 @@ FROM
     Product p 
     JOIN Check_row cr ON p.id_product = cr.id_product
     JOIN Bill b ON cr.check_number = b.check_number
-";
-                case "Category_products":
-                    return @"SELECT
-Category.*, COUNT(Product.id_product) as product_count
-FROM Category
-LEFT JOIN Product ON Category.category_number = Product.category_number
-GROUP BY Category.category_number
 ";
 
                 default:
@@ -237,14 +237,7 @@ GROUP BY Category.category_number
                 TableFiller.Instance.FillTable(categoriesData, Category.CellTypes(), Category.dimensions, null, accessRights);
                 break;
             case "Category_products":
-                var categories_info = SQLController.Instance.ExecuteQuery<Category_products>(query);
-                List<List<string>> categoriesInfoData = new List<List<string>>();
-                foreach (var category in categories_info)
-                {
-                    categoriesInfoData.Add(category.ToList());
-                }
-                TableFiller.Instance.FillTable(categoriesInfoData, Category_products.CellTypes(), Category_products.dimensions, null, AccessController.AccessRights.View);
-                ReloadOrdered("product_count", true);
+               ReloadOrdered("product_count", true);
                 break;
             case "Product":
                 var products = SQLController.Instance.ExecuteQuery<Product>(query);
@@ -361,7 +354,8 @@ GROUP BY Category.category_number
                 {
                     categoriesInfoData.Add(category.ToList());
                 }
-                TableFiller.Instance.FillTable(categoriesInfoData, Category_products.CellTypes(), Category_products.dimensions, null, AccessController.AccessRights.View);
+                TableFiller.Instance.FillTable(categoriesInfoData, 
+                    Category_products.CellTypes(), Category_products.dimensions, null, AccessController.AccessRights.View);
                 break;
 
             case "Category":
